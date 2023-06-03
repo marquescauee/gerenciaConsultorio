@@ -16,6 +16,8 @@ class CreateDentistsTable extends Migration
         Schema::create('dentists', function (Blueprint $table) {
             $table->unsignedBigInteger("id");
             $table->string("CRO");
+            $table->string("password");
+            $table->boolean("admin");
             $table->timestamps();
 
             $table->primary("id");

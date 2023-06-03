@@ -50,7 +50,6 @@ class PatientController extends Controller
 
         $pessoa = Pessoa::create([
             'name' => $request['nome'],
-            'password' => 1,
             'email' => $request['email'],
             'birthday' => $request['data_nasc'],
             'cellphone' => $request['telefone']
