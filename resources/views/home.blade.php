@@ -20,7 +20,19 @@
         .subIcons {
             width: 35px;
         }
+
+        .botaoAdd {
+            position: absolute;
+            top: 15%;
+            left: 17%;
+        }
     </style>
+
+    <div class="botaoAdd">
+        <a href="">
+            <img width="25" src="{{ asset('/img/icon/add.png') }}" alt="">
+        </a>
+    </div>
 
     <table className="table">
         <thead>
@@ -31,35 +43,32 @@
             </tr>
         </thead>
         <tbody
-
             @foreach ($patients as $patient)
                 <tr class="text-center border-bottom">
                     <td>
-                        {{$patient->name}}
+                        {{ $patient->name }}
                     </td>
                     <td>
-                        {{$patient->email}}
+                        {{ $patient->email }}
                     </td>
                     <td class="d-flex justify-content-center align-items-center gap-2">
                         <div class="subIcons">
                             <a href="">
-                                <img width="25" src="{{asset('/img/icon/search.png')}}" alt="">
+                                <img width="25" src="{{ asset('/img/icon/search.png') }}" alt="">
                             </a>
                         </div>
                         <div class="subIcons">
                             <a href="">
-                                <img width="25" src="{{asset('/img/icon/pencil.png')}}" alt="">
+                                <img width="25" src="{{ asset('/img/icon/pencil.png') }}" alt="">
                             </a>
                         </div>
                         <div class="subIcons">
                             <a href="">
-                                <img width="25" src="{{asset('/img/icon/trash.png')}}" alt="">
+                                <img width="25" src="{{ asset('/img/icon/trash.png') }}" alt="">
                             </a>
                         </div>
                     </td>
-                </tr>
-            @endforeach
-
-        </tbody>
+                </tr> @endforeach
+            </tbody>
     </table>
 @endsection

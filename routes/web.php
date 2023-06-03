@@ -20,4 +20,4 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\PatientController::class, 'index'])->name('home');
+Route::get('/patients', [App\Http\Controllers\PatientController::class, 'index'])->name('home');
