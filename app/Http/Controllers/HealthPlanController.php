@@ -1,0 +1,85 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\HealthPlan;
+use Illuminate\Http\Request;
+
+class HealthPlanController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\HealthPlan  $healthPlan
+     * @return \Illuminate\Http\Response
+     */
+    public function show(HealthPlan $healthPlan)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\HealthPlan  $healthPlan
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(HealthPlan $healthPlan)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\HealthPlan  $healthPlan
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, HealthPlan $healthPlan)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\HealthPlan  $healthPlan
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(HealthPlan $healthPlan)
+    {
+        //
+    }
+}
