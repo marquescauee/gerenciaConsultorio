@@ -38,7 +38,7 @@
                 <div class="row d-flex iconSize">
                     <img src="{{ asset('/img/icon/tooth.png') }}" alt="">
                 </div>
-                <a class="d-flex text-decoration-none text-light" href="#">Gerência Consultório</a>
+                <a class="d-flex text-decoration-none text-light" href="{{route('home')}}">Gerência Consultório</a>
             </div>
 
 

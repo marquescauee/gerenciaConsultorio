@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Patient;
+use App\Models\Pessoa;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PatientController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +22,9 @@ class PatientController extends Controller
      */
     public function index()
     {
-        $patients = User::all();
+        $patients = DB::table('patients')
+            ->join('pessoas', 'patients.id', '=', 'pessoas.id')
+            ->get();
 
         return view("home", compact('patients'));
     }
@@ -27,7 +36,7 @@ class PatientController extends Controller
      */
     public function create()
     {
-        //
+        return view('patients.create');
     }
 
     /**
@@ -38,7 +47,21 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $pessoa = Pessoa::create([
+            'name' => $request['nome'],
+            'password' => 1,
+            'email' => $request['email'],
+            'birthday' => $request['data_nasc'],
+            'cellphone' => $request['telefone']
+        ]);
+
+        Patient::create([
+            'id' => $pessoa->id,
+            'cpf' => $request['cpf']
+        ]);
+
+        return redirect('/patients');
     }
 
     /**
@@ -49,7 +72,6 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        //
     }
 
     /**
@@ -58,9 +80,14 @@ class PatientController extends Controller
      * @param  \App\Models\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function edit(Patient $patient)
+    public function edit($id)
     {
-        //
+        $patient = DB::table('patients')
+            ->join('pessoas', 'patients.id', '=', 'pessoas.id')
+            ->where('pessoas.id', $id)
+            ->first();
+
+        return view('patients.edit', ['patient' => $patient]);
     }
 
     /**
@@ -70,9 +97,13 @@ class PatientController extends Controller
      * @param  \App\Models\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Patient $patient)
+    public function update(Request $request)
     {
-        //
+        $patient = Pessoa::find($request['id']);
+
+        $patient->update($request->all());
+
+        return redirect('/patients');
     }
 
     /**
@@ -81,8 +112,15 @@ class PatientController extends Controller
      * @param  \App\Models\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Patient $patient)
+    public function destroy($id)
     {
-        //
+        $patient = Patient::find($id);
+
+        $pessoa = Pessoa::find($id);
+
+        $patient->delete();
+        $pessoa->delete();
+
+        return redirect('/patients');
     }
 }

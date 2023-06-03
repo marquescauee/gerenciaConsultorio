@@ -20,7 +20,6 @@ class CreatePessoasTable extends Migration
             $table->string("email");
             $table->date("birthday");
             $table->string("cellphone");
-            $table->boolean("active");
             $table->timestamps();
         });
     }

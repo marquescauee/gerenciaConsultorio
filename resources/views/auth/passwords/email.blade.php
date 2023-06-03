@@ -4,8 +4,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Recuperar senha') }}</div>
+            <div class="card mt-5">
+                <div class="card-header text-center h2">{{ __('Recuperar senha') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))

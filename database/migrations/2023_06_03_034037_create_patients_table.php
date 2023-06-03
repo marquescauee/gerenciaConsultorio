@@ -16,12 +16,10 @@ class CreatePatientsTable extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->unsignedBigInteger("id");
             $table->string("cpf");
-            $table->unsignedBigInteger("id_prontuario");
             $table->timestamps();
 
             $table->primary("id");
             $table->foreign("id")->references("id")->on("pessoas");
-            $table->foreign("id_prontuario")->references("id")->on("prontuarios");
         });
     }
 
