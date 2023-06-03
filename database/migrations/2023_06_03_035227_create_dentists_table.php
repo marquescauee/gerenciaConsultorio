@@ -15,12 +15,14 @@ class CreateDentistsTable extends Migration
     {
         Schema::create('dentists', function (Blueprint $table) {
             $table->unsignedBigInteger("id");
+            $table->unsignedBigInteger('speciality_id');
             $table->string("CRO");
             $table->string("password");
             $table->boolean("admin");
             $table->timestamps();
 
             $table->primary("id");
+            $table->foreign('speciality_id')->references('id')->on('specialities');
             $table->foreign("id")->references("id")->on("pessoas");
         });
     }

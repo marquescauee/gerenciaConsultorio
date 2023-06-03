@@ -15,10 +15,10 @@ class CreateProntuariosTable extends Migration
     {
         Schema::create('prontuarios', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_pessoa');
+            $table->unsignedBigInteger('id_patient');
             $table->timestamps();
 
-            $table->foreign('id_pessoa')->references('id')->on('pessoas');
+            $table->foreign('id_patient')->references('id')->on('patients');
         });
     }
 
