@@ -3,6 +3,7 @@
         width: 15%;
         position: absolute;
         top: 0;
+        z-index: 1;
     }
 
     .iconSize {
@@ -21,95 +22,101 @@
     .spacingPowerAdjust {
         margin-top: 200px;
     }
+
+    .botoes {
+        background: none;
+        border: none;
+        padding: 0px;
+    }
 </style>
 
+<div style="background-color: #66737e;" class="d-flex mainDiv h-100">
+    <ul class="d-flex mt-4">
+        <li class="d-flex flex-column gap-3">
 
-@section('content')
-    <div style="background-color: #66737e;" class="d-flex mainDiv h-100">
-        <ul class="d-flex mt-4">
-            <li class="d-flex flex-column gap-3">
-
-                <div class="d-flex align-items-center gap-4">
-                    <div class="row d-flex iconSize">
-                        <x-fluentui-dentist-20 />
-                    </div>
-                    <a class="d-flex text-decoration-none text-light" href="#">Gerência Consultório</a>
+            <div class="d-flex align-items-center gap-4">
+                <div class="row d-flex iconSize">
+                    <img src="{{ asset('/img/icon/tooth.png') }}" alt="">
                 </div>
+                <a class="d-flex text-decoration-none text-light" href="#">Gerência Consultório</a>
+            </div>
 
 
-                <div class="d-flex align-items-center gap-4 mt-3">
-                    <div class="row d-flex iconSize">
-                        <x-zondicon-user-solid-circle />
-                    </div>
-                    <a class="d-flex text-decoration-none text-light" href="#">Administrador</a>
+            <div class="d-flex align-items-center gap-4 mt-3">
+                <div class="row d-flex iconSize">
+                    <img src="{{ asset('/img/icon/user.png') }}" alt="">
                 </div>
+                <a class="d-flex text-decoration-none text-light" href="#">Administrador</a>
+            </div>
 
-                <div class="d-flex align-items-center divSubItems mt-3">
-                    <div class="row d-flex subIconsSize">
-                        <x-phosphor-medal-fill />
-                    </div>
-                    <a class="d-flex text-decoration-none text-light" href="#">Fornecedores</a>
+            <div class="d-flex align-items-center divSubItems mt-3">
+                <div class="row d-flex subIconsSize">
+                    <img src="{{ asset('/img/icon/medal.png') }}" alt="">
                 </div>
+                <a class="d-flex text-decoration-none text-light" href="#">Fornecedores</a>
+            </div>
 
-                <div class="d-flex align-items-center divSubItems">
-                    <div class="row d-flex subIconsSize">
-                        <x-govicon-user-suit />
-                    </div>
-                    <a class="d-flex text-decoration-none text-light" href="#">Doutores</a>
+            <div class="d-flex align-items-center divSubItems">
+                <div class="row d-flex subIconsSize">
+                    <img src="{{ asset('/img/icon/dentist.png') }}" alt="">
                 </div>
+                <a class="d-flex text-decoration-none text-light" href="#">Doutores</a>
+            </div>
 
-                <div class="d-flex align-items-center divSubItems">
-                    <div class="row d-flex subIconsSize">
-                        <x-heroicon-s-user-group />
-                    </div>
-                    <a class="d-flex text-decoration-none text-light" href="#">Clientes</a>
+            <div class="d-flex align-items-center divSubItems">
+                <div class="row d-flex subIconsSize">
+                    <img src="{{ asset('/img/icon/multiUser.png') }}" alt="">
                 </div>
+                <a class="d-flex text-decoration-none text-light" href="#">Pacientes</a>
+            </div>
 
-                <div class="d-flex align-items-center divSubItems">
-                    <div class="row d-flex subIconsSize">
-                        <x-tabler-file-search />
-                    </div>
-                    <a class="d-flex text-decoration-none text-light" href="#">Consultas</a>
+            <div class="d-flex align-items-center divSubItems">
+                <div class="row d-flex subIconsSize">
+                    <img src="{{ asset('/img/icon/search.png') }}" alt="">
                 </div>
+                <a class="d-flex text-decoration-none text-light" href="#">Consultas</a>
+            </div>
 
-                <div class="d-flex align-items-center divSubItems">
-                    <div class="row d-flex subIconsSize">
-                        <x-ri-medicine-bottle-fill />
-                    </div>
-                    <a class="d-flex text-decoration-none text-light" href="#">Medicamentos</a>
+            <div class="d-flex align-items-center divSubItems">
+                <div class="row d-flex subIconsSize">
+                    <img src="{{ asset('/img/icon/medicines.png') }}" alt="">
                 </div>
+                <a class="d-flex text-decoration-none text-light" href="#">Medicamentos</a>
+            </div>
 
-                <div class="d-flex align-items-center divSubItems">
-                    <div class="row d-flex subIconsSize">
-                        <x-ri-heart-add-fill />
-                    </div>
-                    <a class="d-flex text-decoration-none text-light" href="#">Planos</a>
+            <div class="d-flex align-items-center divSubItems">
+                <div class="row d-flex subIconsSize">
+                    <img src="{{ asset('/img/icon/heart.png') }}" alt="">
                 </div>
+                <a class="d-flex text-decoration-none text-light" href="#">Planos</a>
+            </div>
 
-                <div class="d-flex align-items-center divSubItems">
-                    <div class="row d-flex subIconsSize">
-                        <x-codicon-graph-line />
-                    </div>
-                    <a class="d-flex text-decoration-none text-light" href="#">Relatórios</a>
+            <div class="d-flex align-items-center divSubItems">
+                <div class="row d-flex subIconsSize">
+                    <img src="{{ asset('/img/icon/trend.png') }}" alt="">
                 </div>
+                <a class="d-flex text-decoration-none text-light" href="#">Relatórios</a>
+            </div>
 
-                <div class="d-flex spacingPowerAdjust">
-                    <div class="d-flex gap-3 flex-column">
-                        <div class="d-flex align-items-center divSubItems">
-                            <div class="row d-flex subIconsSize">
-                                <x-eos-settings />
-                            </div>
-                            <a class="d-flex text-decoration-none text-light" href="#">Ajustes</a>
+            <div class="d-flex spacingPowerAdjust">
+                <div class="d-flex gap-3 flex-column">
+                    <div class="d-flex align-items-center divSubItems">
+                        <div class="row d-flex subIconsSize">
+                            <img src="{{ asset('/img/icon/settings.png') }}" alt="">
                         </div>
-                        <div class="d-flex align-items-center divSubItems">
-                            <div class="row d-flex subIconsSize">
-                                <x-jam-power />
-                            </div>
-                            <a class="d-flex text-decoration-none text-light" href="#">Sair</a>
-                        </div>
+                        <a class="d-flex text-decoration-none text-light" href="#">Ajustes</a>
                     </div>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <div class="d-flex align-items-center divSubItems">
+                            <button class="botoes row d-flex subIconsSize">
+                                <img src="{{ asset('/img/icon/power.png') }}" alt="">
+                            </button>
+                            <button class="botoes my-0 d-flex text-decoration-none text-light">Sair</button>
+                        </div>
+                    </form>
                 </div>
-            </li>
-        </ul>
-    </div>
-@endsection
+            </div>
+        </li>
+    </ul>
+</div>
