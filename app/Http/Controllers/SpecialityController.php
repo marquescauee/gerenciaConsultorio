@@ -37,8 +37,21 @@ class SpecialityController extends Controller
      */
     public function store(Request $request)
     {
+        $rules = [
+            'name' => 'required|unique:specialities|min:3|max:40'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute está vazio.',
+            'name.min' => 'O campo nome deve ter no mínimo 3 caracteres.',
+            'name.max' => 'O campo nome deve ter no máximo 40 caracteres.',
+            'unique' => 'Este valor já possui registro.'
+        ];
+
+        $request->validate($rules, $feedback);
+
         Speciality::create([
-            'name' => $request->nome
+            'name' => $request->name
         ]);
 
         return redirect()->route('specialities.index');
@@ -77,6 +90,18 @@ class SpecialityController extends Controller
      */
     public function update(Request $request)
     {
+        $rules = [
+            'name' => 'required|min:3|max:40'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute está vazio.',
+            'name.min' => 'O campo nome deve ter no mínimo 3 caracteres.',
+            'name.max' => 'O campo nome deve ter no máximo 40 caracteres.'
+        ];
+
+        $request->validate($rules, $feedback);
+
         $speciality = Speciality::find($request->id);
 
         $speciality->update(['name' => $request->name]);

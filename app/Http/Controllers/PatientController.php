@@ -56,7 +56,7 @@ class PatientController extends Controller
     {
 
         $rules = [
-            'nome' => 'required|min:3|max:40',
+            'name' => 'required|min:3|max:40',
             'email' => 'required|email|unique:pessoas',
             'cpf' => 'required|size:11|regex:/^[0-9]{11}$/|unique:patients',
             'cellphone' => 'required|size:9|regex:/^[0-9]{9}$/|unique:pessoas',
@@ -64,8 +64,8 @@ class PatientController extends Controller
         ];
         $feedback = [
             'required' => 'O campo :attribute está vazio.',
-            'nome.min' => 'O campo nome deve ter no mínimo 3 caracteres.',
-            'nome.max' => 'O campo nome deve ter no máximo 40 caracteres.',
+            'name.min' => 'O campo name deve ter no mínimo 3 caracteres.',
+            'name.max' => 'O campo name deve ter no máximo 40 caracteres.',
             'numeric' => 'O campo :attribute deve conter apenas números.',
             'regex' => 'O campo :attribute possui caracteres inválidos.',
             'size' => 'O campo :attribute não possui a quantidade de números necessária.',
@@ -77,7 +77,7 @@ class PatientController extends Controller
         $request->validate($rules, $feedback);
 
         $pessoa = Pessoa::create([
-            'name' => $request['nome'],
+            'name' => $request['name'],
             'email' => $request['email'],
             'birthday' => $request['birthday'],
             'cellphone' => $request['cellphone']
@@ -140,8 +140,8 @@ class PatientController extends Controller
         ];
         $feedback = [
             'required' => 'O campo :attribute está vazio.',
-            'name.min' => 'O campo nome deve ter no mínimo 3 caracteres.',
-            'name.max' => 'O campo nome deve ter no máximo 40 caracteres.',
+            'name.min' => 'O campo name deve ter no mínimo 3 caracteres.',
+            'name.max' => 'O campo name deve ter no máximo 40 caracteres.',
             'numeric' => 'O campo :attribute deve conter apenas números.',
             'regex' => 'O campo :attribute possui caracteres inválidos.',
             'email' => 'O email informado não é válido.',

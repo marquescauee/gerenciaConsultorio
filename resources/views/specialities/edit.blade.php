@@ -19,10 +19,10 @@
             <input type="hidden" value="{{$speciality->id}}" name="id">
 
             <div class="mb-3">
-                <label for="nome" class="form-label @error('nome') is-invalid @enderror">Nome:</label>
-                <input type="text" class="form-control" id="nome" aria-describedby="nome" required value="{{$speciality->name}}" name="name">
+                <label for="name" class="form-label @error('name') is-invalid @enderror">name:</label>
+                <input type="text" class="form-control" id="name" aria-describedby="name" required value="{{$speciality->name}}" name="name">
 
-                @error('nome')
+                @error('name')
                     <span class="invalid-feedback align" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

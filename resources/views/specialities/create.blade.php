@@ -15,10 +15,10 @@
         <form action="{{route('specialities.store')}}" class="w-50 my-0" style="margin-left: 20%" method="POST">
             @csrf
             <div class="mb-3">
-                <label for="nome" class="form-label @error('nome') is-invalid @enderror">Nome:</label>
-                <input type="text" class="form-control" id="nome" aria-describedby="nome" required name="nome">
+                <label for="name" class="form-label @error('name') is-invalid @enderror">name:</label>
+                <input type="text" class="form-control" id="name" aria-describedby="name" required name="name" value="{{ $patient->name ?? old('name') }}">
 
-                @error('nome')
+                @error('name')
                     <span class="invalid-feedback align" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
