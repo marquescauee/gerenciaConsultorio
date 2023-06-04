@@ -69,7 +69,8 @@
                             @endif
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link defaultSize" href="{{ route('register') }}">{{ __('Cadastre-se') }}</a>
+                                    <a class="nav-link defaultSize"
+                                        href="{{ route('register') }}">{{ __('Cadastre-se') }}</a>
                                 </li>
                             @endif
                         @else
@@ -80,11 +81,18 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('home') }}">
-                                        {{ __('Painel de Gerenciamento') }}
-                                    </a>
+                                    @if (Auth::user()->funcionario)
+                                        <a class="dropdown-item" href="{{ route('home') }}">
+                                            {{ __('Painel de Gerenciamento') }}
+                                        </a>
+                                    @endif
 
-
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button class="dropdown-item" href="{{ route('logout') }}">
+                                            {{ __('Sair') }}
+                                        </button>
+                                    </form>
                                 </div>
                             </li>
                         @endguest
