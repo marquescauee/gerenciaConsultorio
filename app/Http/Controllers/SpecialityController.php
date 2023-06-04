@@ -14,7 +14,9 @@ class SpecialityController extends Controller
      */
     public function index()
     {
-        //
+        $specialities = Speciality::all();
+
+        return view('specialities.index', compact('specialities'));
     }
 
     /**
@@ -24,7 +26,7 @@ class SpecialityController extends Controller
      */
     public function create()
     {
-        //
+        return view('specialities.create');
     }
 
     /**
@@ -35,7 +37,11 @@ class SpecialityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Speciality::create([
+            'name' => $request->nome
+        ]);
+
+        return redirect()->route('specialities.index');
     }
 
     /**
@@ -55,9 +61,11 @@ class SpecialityController extends Controller
      * @param  \App\Models\Speciality  $speciality
      * @return \Illuminate\Http\Response
      */
-    public function edit(Speciality $speciality)
+    public function edit($id)
     {
-        //
+        $speciality = Speciality::find($id);
+
+        return view('specialities.edit', compact('speciality'));
     }
 
     /**
@@ -67,9 +75,13 @@ class SpecialityController extends Controller
      * @param  \App\Models\Speciality  $speciality
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Speciality $speciality)
+    public function update(Request $request)
     {
-        //
+        $speciality = Speciality::find($request->id);
+
+        $speciality->update(['name' => $request->name]);
+
+        return redirect()->route('specialities.index');
     }
 
     /**
@@ -78,8 +90,12 @@ class SpecialityController extends Controller
      * @param  \App\Models\Speciality  $speciality
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Speciality $speciality)
+    public function destroy($id)
     {
-        //
+        $speciality = Speciality::find($id);
+
+        $speciality->delete();
+
+        return redirect()->route('specialities.index');
     }
 }

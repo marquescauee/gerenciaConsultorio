@@ -20,7 +20,7 @@
     }
 
     .spacingPowerAdjust {
-        margin-top: 200px;
+        margin-top: 150px;
     }
 
     .botoes {
@@ -60,14 +60,21 @@
                 <div class="row d-flex subIconsSize">
                     <img src="{{ asset('/img/icon/dentist.png') }}" alt="">
                 </div>
-                <a class="d-flex text-decoration-none text-light" href="#">Doutores</a>
+                <a class="d-flex text-decoration-none text-light" href="{{route('dentists.index')}}">Dentistas</a>
             </div>
 
             <div class="d-flex align-items-center divSubItems">
                 <div class="row d-flex subIconsSize">
                     <img src="{{ asset('/img/icon/multiUser.png') }}" alt="">
                 </div>
-                <a class="d-flex text-decoration-none text-light" href="#">Pacientes</a>
+                <a class="d-flex text-decoration-none text-light" href="{{route('home')}}">Pacientes</a>
+            </div>
+
+            <div class="d-flex align-items-center divSubItems">
+                <div class="row d-flex subIconsSize">
+                    <img src="{{ asset('/img/icon/especialidade.png') }}" alt="">
+                </div>
+                <a class="d-flex text-decoration-none text-light" href="{{route('specialities.index')}}">Especialidades</a>
             </div>
 
             <div class="d-flex align-items-center divSubItems">

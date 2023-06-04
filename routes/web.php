@@ -42,6 +42,14 @@ Route::post('/dentists', [App\Http\Controllers\DentistsController::class, 'store
 Route::put('/dentists', [App\Http\Controllers\DentistsController::class, 'update'])->name('dentists.update');
 Route::delete('/dentists/delete/{id}', [App\Http\Controllers\DentistsController::class, 'destroy']);
 
+//Specialities Routes
+Route::get('/specialities', [\App\Http\Controllers\SpecialityController::class, 'index'])->name('specialities.index');
+Route::get('/specialities/create', [\App\Http\Controllers\SpecialityController::class, 'create'])->name('specialities.create');
+Route::post('/specialities', [\App\Http\Controllers\SpecialityController::class, 'store'])->name('specialities.store');
+Route::get('/specialities/edit/{id}', [\App\Http\Controllers\SpecialityController::class, 'edit'])->name('specialities.edit');
+Route::put('/specialities', [\App\Http\Controllers\SpecialityController::class, 'update'])->name('specialities.update');
+Route::delete('/specialities/delete/{id}', [\App\Http\Controllers\SpecialityController::class, 'destroy'])->name('specialities.delete');
+
 Route::get('/gerarDados', function () {
     if (DB::table('specialities')->count() == 0) {
         DB::table('specialities')->insert([
@@ -73,7 +81,6 @@ Route::get('/gerarDados', function () {
             'password' => $admin->password,
             'admin' => 1,
         ]);
-
     }
 
     return redirect('/');
