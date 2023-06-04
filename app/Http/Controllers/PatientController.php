@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Patient;
 use App\Models\Pessoa;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -25,6 +26,12 @@ class PatientController extends Controller
         $patients = DB::table('patients')
             ->join('pessoas', 'patients.id', '=', 'pessoas.id')
             ->get();
+
+        foreach ($patients as $patient) {
+            $format = Carbon::parse($patient->birthday)->format('d/m/Y');
+
+            $patient->birthday = $format;
+        }
 
         return view("home", compact('patients'));
     }
@@ -47,6 +54,26 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
+
+        $rules = [
+            'nome' => 'required|min:3|max:40',
+            'email' => 'required|email',
+            'cpf' => 'required|size:11|regex:/^[0-9]{11}$/',
+            'telefone' => 'required|size:9|regex:/^[0-9]{9}$/',
+            'data_nasc' => 'required|date_format:d/m/Y'
+        ];
+        $feedback = [
+            'required' => 'O campo :attribute está vazio.',
+            'nome.min' => 'O campo nome deve ter no mínimo 3 caracteres.',
+            'nome.max' => 'O campo nome deve ter no máximo 40 caracteres.',
+            'numeric' => 'O campo :attribute deve conter apenas números.',
+            'regex' => 'O campo :attribute possui caracteres inválidos.',
+            'size' => 'O campo :attribute não possui a quantidade de números necessária.',
+            'email' => 'O email informado não é válido.',
+            'date_format' => 'Formato de data inválido.'
+        ];
+
+        $request->validate($rules, $feedback);
 
         $pessoa = Pessoa::create([
             'name' => $request['nome'],

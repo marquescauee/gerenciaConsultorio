@@ -62,6 +62,7 @@
                         <td>
                             {{ $dentist->email }}
                         </td>
+
                         <td>
                             {{ $dentist->birthday }}
                         </td>
