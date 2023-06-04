@@ -58,8 +58,8 @@ class PatientController extends Controller
         $rules = [
             'name' => 'required|min:3|max:40',
             'email' => 'required|email|unique:pessoas',
-            'cpf' => 'required|size:11|regex:/^[0-9]{11}$/|unique:patients',
-            'cellphone' => 'required|size:9|regex:/^[0-9]{9}$/|unique:pessoas',
+            'cpf' => 'required|regex:/^[0-9]{11}$/|unique:patients',
+            'cellphone' => 'required|regex:/^[0-9]{9}$/|unique:pessoas',
             'birthday' => 'required|date_format:d/m/Y'
         ];
         $feedback = [

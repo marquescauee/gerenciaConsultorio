@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dentists;
 use App\Models\Pessoa;
 use App\Models\Speciality;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -27,6 +28,12 @@ class DentistsController extends Controller
             ->join('pessoas', 'dentists.id', '=', 'pessoas.id')
             ->where('admin', 0)
             ->get();
+
+        foreach ($dentists as $dentist) {
+            $format = Carbon::parse($dentist->birthday)->format('d/m/Y');
+
+            $dentist->birthday = $format;
+        }
 
         $specialities = Speciality::all();
 
@@ -53,18 +60,41 @@ class DentistsController extends Controller
      */
     public function store(Request $request)
     {
-        $pessoa = Pessoa::create([
-            'name' => $request['nome'],
-            'email' => $request['email'],
-            'birthday' => $request['data_nasc'],
-            'cellphone' => $request['telefone']
-        ]);
 
+        $rules = [
+            'name' => 'required|min:3|max:40',
+            'email' => 'required|email|unique:pessoas',
+            'cellphone' => 'required|regex:/^[0-9]{9}$/|unique:pessoas',
+            'birthday' => 'required|date_format:d/m/Y',
+            'CRO' => 'required|unique:dentists|regex:/^[A-Z]{2}-[0-9]{5}$/',
+            'password' => 'required|min:8'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute está vazio.',
+            'name.min' => 'O campo name deve ter no mínimo 3 caracteres.',
+            'name.max' => 'O campo name deve ter no máximo 40 caracteres.',
+            'unique' => 'Este valor já possui registro.',
+            'password.min' => 'O campo senha deve ter no mínimo 8 caracteres',
+            'CRO.regex' => 'O campo CRO está em um formato inválido.',
+            'regex' => 'O campo :attribute possui caracteres inválidos ou quantidade insuficiente.',
+            'email' => 'O email informado não é válido.',
+            'date_format' => 'Formato de data inválido.'
+        ];
+
+        $request->validate($rules, $feedback);
+
+        $pessoa = Pessoa::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'birthday' => $request['birthday'],
+            'cellphone' => $request['cellphone']
+        ]);
 
         Dentists::create([
             'id' => $pessoa->id,
             'speciality_id' => $request['speciality'],
-            'CRO' => $request->cro,
+            'CRO' => $request->CRO,
             'password' => Hash::make($request->password),
             'admin' => 0
         ]);
@@ -96,6 +126,11 @@ class DentistsController extends Controller
             ->where('pessoas.id', $id)
             ->first();
 
+        $format = Carbon::parse($dentist->birthday)->format('d/m/Y');
+
+        $dentist->birthday = $format;
+
+
         $specialities = Speciality::all();
 
         return view('dentists.edit', ['dentist' => $dentist, 'specialities' => $specialities]);
@@ -110,6 +145,27 @@ class DentistsController extends Controller
      */
     public function update(Request $request)
     {
+        $rules = [
+            'name' => 'required|min:3|max:40',
+            'email' => 'required|email',
+            'cellphone' => 'required|regex:/^[0-9]{9}$/',
+            'birthday' => 'required|date_format:d/m/Y',
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute está vazio.',
+            'name.min' => 'O campo name deve ter no mínimo 3 caracteres.',
+            'name.max' => 'O campo name deve ter no máximo 40 caracteres.',
+            'password.min' => 'O campo senha deve ter no mínimo 8 caracteres',
+            'unique' => 'Este valor já possui registro.',
+            'regex' => 'O campo :attribute possui caracteres inválidos ou quantidade insuficiente.',
+            'size' => 'O campo :attribute não possui a quantidade de números necessária.',
+            'email' => 'O email informado não é válido.',
+            'date_format' => 'Formato de data inválido.'
+        ];
+
+        $request->validate($rules, $feedback);
+
         $dentist = Pessoa::find($request['id']);
 
         $dentist->update($request->all());

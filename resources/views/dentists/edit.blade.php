@@ -19,11 +19,11 @@
             <input type="hidden" value="{{ $dentist->id }}" name="id">
 
             <div class="mb-3">
-                <label for="nome" class="form-label @error('nome') is-invalid @enderror">Nome:</label>
-                <input type="text" class="form-control" id="nome" aria-describedby="nome" required
+                <label for="name" class="form-label @error('name') is-invalid @enderror">name:</label>
+                <input type="text" class="form-control" id="name" aria-describedby="name" required
                     value="{{ $dentist->name }}" name="name">
 
-                @error('nome')
+                @error('name')
                     <span class="invalid-feedback align" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -63,11 +63,11 @@
             </div>
 
             <div class="mb-3">
-                <label for="telefone" class="form-label @error('telefone') is-invalid @enderror">Telefone:</label>
-                <input type="telefone" class="form-control" id="telefone" aria-describedby="telefone" required
+                <label for="cellphone" class="form-label @error('cellphone') is-invalid @enderror">cellphone:</label>
+                <input type="text" class="form-control" id="cellphone" aria-describedby="cellphone" required
                     value="{{ $dentist->cellphone }}" name="cellphone">
 
-                @error('telefone')
+                @error('cellphone')
                     <span class="invalid-feedback align" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -75,12 +75,12 @@
             </div>
 
             <div class="mb-3">
-                <label for="data_nasc" class="form-label @error('data_nasc') is-invalid @enderror">Data de
+                <label for="birthday" class="form-label @error('birthday') is-invalid @enderror">Data de
                     Nascimento:</label>
-                <input type="text" class="form-control" id="data_nasc" aria-describedby="data_nasc" required
+                <input type="text" class="form-control" id="birthday" aria-describedby="birthday" required
                     value="{{ $dentist->birthday }}" name="birthday">
 
-                @error('data_nasc')
+                @error('birthday')
                     <span class="invalid-feedback align" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
