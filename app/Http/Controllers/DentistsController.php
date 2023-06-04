@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dentists;
 use App\Models\Pessoa;
+use App\Models\Speciality;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +28,9 @@ class DentistsController extends Controller
             ->where('admin', 0)
             ->get();
 
-        return view('dentists.index', compact('dentists'));
+        $specialities = Speciality::all();
+
+        return view('dentists.index', compact('dentists', 'specialities'));
     }
 
     /**
@@ -37,7 +40,9 @@ class DentistsController extends Controller
      */
     public function create()
     {
-        return view('dentists.create');
+        $specialities = Speciality::all();
+
+        return view('dentists.create', compact('specialities'));
     }
 
     /**
@@ -55,8 +60,10 @@ class DentistsController extends Controller
             'cellphone' => $request['telefone']
         ]);
 
+
         Dentists::create([
             'id' => $pessoa->id,
+            'speciality_id' => $request['speciality'],
             'CRO' => $request->cro,
             'password' => Hash::make($request->password),
             'admin' => 0
@@ -89,7 +96,9 @@ class DentistsController extends Controller
             ->where('pessoas.id', $id)
             ->first();
 
-        return view('dentists.edit', ['dentist' => $dentist]);
+        $specialities = Speciality::all();
+
+        return view('dentists.edit', ['dentist' => $dentist, 'specialities' => $specialities]);
     }
 
     /**
@@ -104,6 +113,9 @@ class DentistsController extends Controller
         $dentist = Pessoa::find($request['id']);
 
         $dentist->update($request->all());
+
+        $dentist = Dentists::find($request['id']);
+        $dentist->update(['speciality_id' => $request['speciality']]);
 
         return redirect('/dentists');
     }

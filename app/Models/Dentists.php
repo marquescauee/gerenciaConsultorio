@@ -9,5 +9,5 @@ class Dentists extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'password', 'CRO', 'admin'];
+    protected $fillable = ['id', 'speciality_id', 'password', 'CRO', 'admin'];
 }

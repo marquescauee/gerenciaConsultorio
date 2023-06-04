@@ -36,6 +36,7 @@
                 <tr class="text-center">
                     <th>Nome</th>
                     <th>CRO</th>
+                    <th>Especialidade</th>
                     <th>Email</td>
                     <th>Data de Nascimento</td>
                     <th>Telefone</td>
@@ -51,6 +52,13 @@
                         <td>
                             {{ $dentist->CRO }}
                         </td>
+                       @foreach ($specialities as $speciality)
+                            @if ($speciality->id == $dentist->speciality_id)
+                                <td>
+                                    {{ $speciality->name }}
+                                </td>
+                            @endif
+                       @endforeach
                         <td>
                             {{ $dentist->email }}
                         </td>
