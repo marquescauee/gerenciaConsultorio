@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dentists;
+use App\Models\Patient;
 use App\Models\Pessoa;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
@@ -53,9 +54,12 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'name' => ['required', 'string','min:3', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'unique:pessoas'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'cpf' => ['required', 'regex:/^[0-9]{11}$/', 'unique:patients'],
+            'cellphone' => ['required', 'regex:/^[0-9]{9}$/','unique:pessoas'],
+            'birthday' => ['required', 'date_format:d/m/Y']
         ]);
     }
 
@@ -67,10 +71,28 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'funcionario' => 0
         ]);
+
+        $pessoa = Pessoa::create([
+            'id' => $user->id,
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'birthday' => $data['birthday'],
+            'cellphone' => $data['cellphone'],
+            'password' => $user->password
+        ]);
+
+        Patient::create([
+            'id' => $pessoa->id,
+            'cpf' => $data['cpf']
+        ]);
+
+        return $user;
     }
 }

@@ -8,6 +8,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class PatientController extends Controller
 {
@@ -76,11 +77,20 @@ class PatientController extends Controller
 
         $request->validate($rules, $feedback);
 
+        $user = User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request->password),
+            'funcionario' => 0
+        ]);
+
         $pessoa = Pessoa::create([
+            'id' => $user->id,
             'name' => $request['name'],
             'email' => $request['email'],
             'birthday' => $request['birthday'],
-            'cellphone' => $request['cellphone']
+            'cellphone' => $request['cellphone'],
+            'password' => $user->password
         ]);
 
         Patient::create([
@@ -152,12 +162,22 @@ class PatientController extends Controller
 
         $patient = Pessoa::find($request['id']);
 
-        $patient->update([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'birthday' => $request['birthday'],
-            'cellphone' => $request['cellphone']
-        ]);
+        if ($request->password) {
+            $patient->update([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'birthday' => $request['birthday'],
+                'cellphone' => $request['cellphone'],
+                'password' => Hash::make($request['password'])
+            ]);
+        } else {
+            $patient->update([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'birthday' => $request['birthday'],
+                'cellphone' => $request['cellphone']
+            ]);
+        }
 
         return redirect()->route('home');
     }

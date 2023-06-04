@@ -17,7 +17,6 @@ class CreateDentistsTable extends Migration
             $table->unsignedBigInteger("id");
             $table->unsignedBigInteger('speciality_id');
             $table->string("CRO");
-            $table->string("password");
             $table->boolean("admin");
             $table->timestamps();
 

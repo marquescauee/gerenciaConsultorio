@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email', 255);
             $table->string('password', 70);
             $table->string('name', 255);
+            $table->boolean('funcionario');
             $table->timestamps();
             $table->rememberToken();
         });

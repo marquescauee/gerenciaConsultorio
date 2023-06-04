@@ -56,29 +56,30 @@ Route::get('/gerarDados', function () {
             'name' => 'ortodontia'
         ]);
 
-        DB::table('users')->insert([
+        $user = User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin1234'),
+            'funcionario' => 1,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
         DB::table('pessoas')->insert([
+            'id' => $user->id,
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'birthday' => Carbon::now(),
-            'cellphone' => 111111111
+            'cellphone' => 111111111,
+            'password' => $user->password
         ]);
 
-        $admin = User::all()->first();
         $speciality = Speciality::all()->first();
 
         DB::table('dentists')->insert([
-            'id' => $admin->id,
+            'id' => $user->id,
             'speciality_id' => $speciality->id,
             'CRO' => 'SC-12345',
-            'password' => $admin->password,
             'admin' => 1,
         ]);
     }

@@ -28,7 +28,14 @@
         .defaultSize {
             font-size: 20px;
         }
-        html, body {margin: 0; height: 100%; overflow: hidden; z-index: 0;}
+
+        html,
+        body {
+            margin: 0;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
     </style>
 </head>
 
@@ -36,7 +43,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand defaultSize mt-2" href="{{route('home')}}">
+                <a class="navbar-brand defaultSize mt-2" href="{{ route('home') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -60,23 +67,26 @@
                                     <a class="nav-link defaultSize" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link defaultSize" href="{{ route('register') }}">{{ __('Cadastre-se') }}</a>
+                                </li>
+                            @endif
                         @else
-                            {{-- <li class="nav-item dropdown">
+                            <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
-                                </a> --}}
+                                </a>
 
-                                {{-- <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Sair') }}
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('home') }}">
+                                        {{ __('Painel de Gerenciamento') }}
                                     </a>
 
 
-                                </div> --}}
-                            {{-- </li> --}}
+                                </div>
+                            </li>
                         @endguest
                     </ul>
                 </div>

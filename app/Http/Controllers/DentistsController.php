@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dentists;
 use App\Models\Pessoa;
 use App\Models\Speciality;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -84,20 +85,29 @@ class DentistsController extends Controller
 
         $request->validate($rules, $feedback);
 
+        $user = User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request->password),
+            'funcionario' => 1
+        ]);
+
         $pessoa = Pessoa::create([
+            'id' => $user->id,
             'name' => $request['name'],
             'email' => $request['email'],
             'birthday' => $request['birthday'],
-            'cellphone' => $request['cellphone']
+            'cellphone' => $request['cellphone'],
+            'password' => $user->password
         ]);
 
         Dentists::create([
             'id' => $pessoa->id,
             'speciality_id' => $request['speciality'],
             'CRO' => $request->CRO,
-            'password' => Hash::make($request->password),
             'admin' => 0
         ]);
+
 
         return redirect('/dentists');
     }
@@ -168,7 +178,22 @@ class DentistsController extends Controller
 
         $dentist = Pessoa::find($request['id']);
 
-        $dentist->update($request->all());
+        if ($request->password) {
+            $dentist->update([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'birthday' => $request['birthday'],
+                'cellphone' => $request['cellphone'],
+                'password' => Hash::make($request['password'])
+            ]);
+        } else {
+            $dentist->update([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'birthday' => $request['birthday'],
+                'cellphone' => $request['cellphone'],
+            ]);
+        }
 
         $dentist = Dentists::find($request['id']);
         $dentist->update(['speciality_id' => $request['speciality']]);
