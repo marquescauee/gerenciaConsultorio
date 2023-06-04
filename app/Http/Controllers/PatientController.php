@@ -57,10 +57,10 @@ class PatientController extends Controller
 
         $rules = [
             'nome' => 'required|min:3|max:40',
-            'email' => 'required|email',
-            'cpf' => 'required|size:11|regex:/^[0-9]{11}$/',
-            'telefone' => 'required|size:9|regex:/^[0-9]{9}$/',
-            'data_nasc' => 'required|date_format:d/m/Y'
+            'email' => 'required|email|unique:pessoas',
+            'cpf' => 'required|size:11|regex:/^[0-9]{11}$/|unique:patients',
+            'cellphone' => 'required|size:9|regex:/^[0-9]{9}$/|unique:pessoas',
+            'birthday' => 'required|date_format:d/m/Y'
         ];
         $feedback = [
             'required' => 'O campo :attribute está vazio.',
@@ -70,7 +70,8 @@ class PatientController extends Controller
             'regex' => 'O campo :attribute possui caracteres inválidos.',
             'size' => 'O campo :attribute não possui a quantidade de números necessária.',
             'email' => 'O email informado não é válido.',
-            'date_format' => 'Formato de data inválido.'
+            'date_format' => 'Formato de data inválido.',
+            'unique' => 'Este valor já possui registro.'
         ];
 
         $request->validate($rules, $feedback);
@@ -78,8 +79,8 @@ class PatientController extends Controller
         $pessoa = Pessoa::create([
             'name' => $request['nome'],
             'email' => $request['email'],
-            'birthday' => $request['data_nasc'],
-            'cellphone' => $request['telefone']
+            'birthday' => $request['birthday'],
+            'cellphone' => $request['cellphone']
         ]);
 
         Patient::create([
@@ -113,6 +114,12 @@ class PatientController extends Controller
             ->where('pessoas.id', $id)
             ->first();
 
+
+        $format = Carbon::parse($patient->birthday)->format('d/m/Y');
+
+        $patient->birthday = $format;
+
+
         return view('patients.edit', ['patient' => $patient]);
     }
 
@@ -125,11 +132,34 @@ class PatientController extends Controller
      */
     public function update(Request $request)
     {
+        $rules = [
+            'name' => 'required|min:3|max:40',
+            'email' => 'required|email',
+            'cellphone' => 'required|regex:/^[0-9]{9}$/',
+            'birthday' => 'required|date_format:d/m/Y'
+        ];
+        $feedback = [
+            'required' => 'O campo :attribute está vazio.',
+            'name.min' => 'O campo nome deve ter no mínimo 3 caracteres.',
+            'name.max' => 'O campo nome deve ter no máximo 40 caracteres.',
+            'numeric' => 'O campo :attribute deve conter apenas números.',
+            'regex' => 'O campo :attribute possui caracteres inválidos.',
+            'email' => 'O email informado não é válido.',
+            'date_format' => 'Formato de data inválido.'
+        ];
+
+        $request->validate($rules, $feedback);
+
         $patient = Pessoa::find($request['id']);
 
-        $patient->update($request->all());
+        $patient->update([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'birthday' => $request['birthday'],
+            'cellphone' => $request['cellphone']
+        ]);
 
-        return redirect('/patients');
+        return redirect()->route('home');
     }
 
     /**

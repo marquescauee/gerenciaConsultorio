@@ -48,10 +48,10 @@
             </div>
 
             <div class="mb-3">
-                <label for="telefone" class="form-label @error('telefone') is-invalid @enderror">Telefone:</label>
-                <input type="telefone" class="form-control" id="telefone" aria-describedby="telefone" name="telefone" required value="{{ $patient->cellphone ?? old('telefone') }}">
+                <label for="cellphone" class="form-label @error('cellphone') is-invalid @enderror">Telefone:</label>
+                <input type="text" class="form-control" id="cellphone" aria-describedby="cellphone" name="cellphone" required value="{{ $patient->cellphone ?? old('cellphone') }}">
 
-                @error('telefone')
+                @error('cellphone')
                     <span class="invalid-feedback align" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -59,10 +59,10 @@
             </div>
 
             <div class="mb-3">
-                <label for="data_nasc" class="form-label @error('data_nasc') is-invalid @enderror">Data de Nascimento:</label>
-                <input type="text" class="form-control" id="data_nasc" aria-describedby="data_nasc" name="data_nasc" placeholder="Formato dd/mm/YYYY" required value="{{ $patient->birthday ?? old('data_nasc') }}">
+                <label for="birthday" class="form-label @error('birthday') is-invalid @enderror">Data de Nascimento:</label>
+                <input type="text" class="form-control" id="birthday" aria-describedby="birthday" name="birthday" placeholder="Formato dd/mm/YYYY" required value="{{ $patient->birthday ?? old('birthday') }}">
 
-                @error('data_nasc')
+                @error('birthday')
                     <span class="invalid-feedback align" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
