@@ -13,7 +13,7 @@ class CreateHealthPlansTable extends Migration
      */
     public function up()
     {
-        Schema::create('healthPlans', function (Blueprint $table) {
+        Schema::create('health_plans', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreateHealthPlansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('healthPlans');
+        Schema::dropIfExists('health_plans');
     }
 }

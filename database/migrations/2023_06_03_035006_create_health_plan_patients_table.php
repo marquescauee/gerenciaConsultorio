@@ -6,19 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateHealthPlanPatientsTable extends Migration
 {
-    /**
+   /**
      * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('healthPlan_patients', function (Blueprint $table) {
-            $table->unsignedBigInteger("id_healthPlan");
+        Schema::create('health_plans_patients', function (Blueprint $table) {
+            $table->unsignedBigInteger("id_health_plan");
             $table->unsignedBigInteger("id_patient");
             $table->timestamps();
 
-            $table->foreign("id_healthPlan")->references("id")->on("healthPlans");
+            $table->foreign("id_health_plan")->references("id")->on("health_plans");
             $table->foreign("id_patient")->references("id")->on("patients");
         });
     }
@@ -30,14 +30,14 @@ class CreateHealthPlanPatientsTable extends Migration
      */
     public function down()
     {
-        Schema::table('healthPlan_patients', function (Blueprint $table) {
-            $table->dropForeign(["id_healthPlan"]);
+        Schema::table('health_plans_patients', function (Blueprint $table) {
+            $table->dropForeign(["id_health_plan"]);
             $table->dropForeign(["id_patient"]);
 
-            $table->dropColumn(["id_healthPlan"]);
+            $table->dropColumn(["id_health_plan"]);
             $table->dropColumn(["id_patient"]);
         });
 
-        Schema::dropIfExists('healthPlan_patients');
+        Schema::dropIfExists('health_plans_patients');
     }
 }
