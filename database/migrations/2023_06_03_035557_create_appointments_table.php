@@ -35,6 +35,16 @@ class CreateAppointmentsTable extends Migration
      */
     public function down()
     {
+        Schema::table('appointments', function (Blueprint $table) {
+            $table->dropForeign(["id_dentist"]);
+            $table->dropForeign(["id_patient"]);
+            $table->dropForeign(["id_procedure"]);
+
+            $table->dropColumn(["id_dentist"]);
+            $table->dropColumn(["id_patient"]);
+            $table->dropColumn(["id_procedure"]);
+        });
+
         Schema::dropIfExists('appointments');
     }
 }

@@ -33,6 +33,11 @@ class CreateDentistsTable extends Migration
      */
     public function down()
     {
+        Schema::table('dentists', function (Blueprint $table) {
+            $table->dropForeign(["speciality_id"]);
+            $table->dropColumn(["speciality_id"]);
+        });
+
         Schema::dropIfExists('dentists');
     }
 }

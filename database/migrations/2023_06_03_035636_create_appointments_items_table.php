@@ -31,6 +31,14 @@ class CreateAppointmentsItemsTable extends Migration
      */
     public function down()
     {
+        Schema::table('appointments_items', function (Blueprint $table) {
+            $table->dropForeign(["id_appointment"]);
+            $table->dropForeign(["id_product"]);
+
+            $table->dropColumn(["id_appointment"]);
+            $table->dropColumn(["id_product"]);
+        });
+
         Schema::dropIfExists('appointments_items');
     }
 }
