@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\HealthPlan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HealthPlanController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+        $this->middleware('funcionarioMiddleware');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,7 @@ class HealthPlanController extends Controller
      */
     public function index()
     {
-        //
+        $plans = DB::table('health_plans')
     }
 
     /**
