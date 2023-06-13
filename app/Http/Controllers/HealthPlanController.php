@@ -20,7 +20,9 @@ class HealthPlanController extends Controller
      */
     public function index()
     {
-        $plans = DB::table('health_plans')
+        $plans = DB::table('health_plans')->get();
+
+        return view('health_plans.index', compact('plans'));
     }
 
     /**
@@ -30,7 +32,8 @@ class HealthPlanController extends Controller
      */
     public function create()
     {
-        //
+        $plan = new HealthPlan();
+        return view('health_plans.create', compact('plan'));
     }
 
     /**
@@ -41,7 +44,24 @@ class HealthPlanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => 'required|min:3|max:40|unique'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute está vazio',
+            'name.min' => 'O campo name deve ter no mínimo 3 caracteres.',
+            'name.max' => 'O campo name deve ter no máximo 40 caracteres.',
+            'unique' => 'Este valor já possui registro.',
+        ];
+
+        $request->validate($rules, $feedback);
+
+        HealthPlan::create([
+            'name' => $request->get('name')
+        ]);
+
+        return redirect('/plans');
     }
 
     /**
@@ -63,7 +83,7 @@ class HealthPlanController extends Controller
      */
     public function edit(HealthPlan $healthPlan)
     {
-        //
+        return view('plan.edit', compact('healthPlan'));
     }
 
     /**
@@ -75,7 +95,21 @@ class HealthPlanController extends Controller
      */
     public function update(Request $request, HealthPlan $healthPlan)
     {
-        //
+        $rules = [
+            'name' => 'required|min:3|max:40|unique'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute está vazio',
+            'name.min' => 'O campo name deve ter no mínimo 3 caracteres.',
+            'name.max' => 'O campo name deve ter no máximo 40 caracteres.',
+            'unique' => 'Este valor já possui registro.',
+        ];
+
+        $request->validate($rules, $feedback);
+        $healthPlan->update(['name' => $request->get('name')]);
+
+        return redirect('/plans');
     }
 
     /**
@@ -86,6 +120,7 @@ class HealthPlanController extends Controller
      */
     public function destroy(HealthPlan $healthPlan)
     {
-        //
+        $healthPlan->delete();
+        return redirect('/dentists');
     }
 }
