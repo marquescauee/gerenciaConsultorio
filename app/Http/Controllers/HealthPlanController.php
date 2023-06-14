@@ -22,7 +22,7 @@ class HealthPlanController extends Controller
     {
         $plans = DB::table('health_plans')->get();
 
-        return view('health_plans.index', compact('plans'));
+        return view('plans.index', compact('plans'));
     }
 
     /**
@@ -33,7 +33,7 @@ class HealthPlanController extends Controller
     public function create()
     {
         $plan = new HealthPlan();
-        return view('health_plans.create', compact('plan'));
+        return view('plans.create', compact('plan'));
     }
 
     /**
@@ -45,14 +45,13 @@ class HealthPlanController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required|min:3|max:40|unique'
+            'name' => 'required|min:3|max:40'
         ];
 
         $feedback = [
             'required' => 'O campo :attribute está vazio',
             'name.min' => 'O campo name deve ter no mínimo 3 caracteres.',
             'name.max' => 'O campo name deve ter no máximo 40 caracteres.',
-            'unique' => 'Este valor já possui registro.',
         ];
 
         $request->validate($rules, $feedback);
@@ -81,9 +80,10 @@ class HealthPlanController extends Controller
      * @param  \App\Models\HealthPlan  $healthPlan
      * @return \Illuminate\Http\Response
      */
-    public function edit(HealthPlan $healthPlan)
+    public function edit($id)
     {
-        return view('plan.edit', compact('healthPlan'));
+        $plan = DB::table('health_plans')->where('id', $id)->first();
+        return view('plans.edit', compact('plan'));
     }
 
     /**
@@ -93,21 +93,21 @@ class HealthPlanController extends Controller
      * @param  \App\Models\HealthPlan  $healthPlan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, HealthPlan $healthPlan)
+    public function update(Request $request)
     {
         $rules = [
-            'name' => 'required|min:3|max:40|unique'
+            'name' => 'required|min:3|max:40'
         ];
 
         $feedback = [
             'required' => 'O campo :attribute está vazio',
             'name.min' => 'O campo name deve ter no mínimo 3 caracteres.',
             'name.max' => 'O campo name deve ter no máximo 40 caracteres.',
-            'unique' => 'Este valor já possui registro.',
         ];
 
+        $plan = HealthPlan::find($request->get('id'));
         $request->validate($rules, $feedback);
-        $healthPlan->update(['name' => $request->get('name')]);
+        $plan->update(['name' => $request->get('name')]);
 
         return redirect('/plans');
     }
@@ -118,9 +118,10 @@ class HealthPlanController extends Controller
      * @param  \App\Models\HealthPlan  $healthPlan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(HealthPlan $healthPlan)
+    public function destroy(int $id)
     {
-        $healthPlan->delete();
-        return redirect('/dentists');
+        $plan = HealthPlan::find($id);
+        $plan->delete();
+        return redirect('/plans');
     }
 }
