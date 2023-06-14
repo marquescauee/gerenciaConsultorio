@@ -27,6 +27,7 @@ class PatientController extends Controller
     {
         $patients = DB::table('patients')
             ->join('pessoas', 'patients.id', '=', 'pessoas.id')
+            ->where('pessoas.active', 'true')
             ->get();
 
         foreach ($patients as $patient) {
@@ -91,6 +92,7 @@ class PatientController extends Controller
             'email' => $request['email'],
             'birthday' => $request['birthday'],
             'cellphone' => $request['cellphone'],
+            'active' => true,
             'password' => $user->password
         ]);
 
@@ -169,6 +171,7 @@ class PatientController extends Controller
                 'email' => $request['email'],
                 'birthday' => $request['birthday'],
                 'cellphone' => $request['cellphone'],
+                'active' => true,
                 'password' => Hash::make($request['password'])
             ]);
         } else {
@@ -176,6 +179,7 @@ class PatientController extends Controller
                 'name' => $request['name'],
                 'email' => $request['email'],
                 'birthday' => $request['birthday'],
+                'active' => true,
                 'cellphone' => $request['cellphone']
             ]);
         }
@@ -191,12 +195,9 @@ class PatientController extends Controller
      */
     public function destroy($id)
     {
-        $patient = Patient::find($id);
-
         $pessoa = Pessoa::find($id);
 
-        $patient->delete();
-        $pessoa->delete();
+        $pessoa->update(['active' => false]);
 
         return redirect('/patients');
     }

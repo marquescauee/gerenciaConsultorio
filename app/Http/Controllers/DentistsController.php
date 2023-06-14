@@ -29,6 +29,7 @@ class DentistsController extends Controller
         $dentists = DB::table('dentists')
             ->join('pessoas', 'dentists.id', '=', 'pessoas.id')
             ->where('admin', 0)
+            ->where('pessoas.active', true)
             ->get();
 
         foreach ($dentists as $dentist) {
@@ -99,6 +100,7 @@ class DentistsController extends Controller
             'email' => $request['email'],
             'birthday' => $request['birthday'],
             'cellphone' => $request['cellphone'],
+            'active' => true,
             'password' => $user->password
         ]);
 
@@ -185,6 +187,7 @@ class DentistsController extends Controller
                 'email' => $request['email'],
                 'birthday' => $request['birthday'],
                 'cellphone' => $request['cellphone'],
+                'active' => true,
                 'password' => Hash::make($request['password'])
             ]);
         } else {
@@ -192,6 +195,7 @@ class DentistsController extends Controller
                 'name' => $request['name'],
                 'email' => $request['email'],
                 'birthday' => $request['birthday'],
+                'active' => true,
                 'cellphone' => $request['cellphone'],
             ]);
         }
@@ -210,12 +214,9 @@ class DentistsController extends Controller
      */
     public function destroy($id)
     {
-        $dentist = Dentists::find($id);
-
         $pessoa = Pessoa::find($id);
 
-        $dentist->delete();
-        $pessoa->delete();
+        $pessoa->update(['active' => false]);
 
         return redirect('/dentists');
     }

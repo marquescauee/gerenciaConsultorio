@@ -71,6 +71,7 @@ Route::get('/gerarDados', function () {
             'email' => 'admin@gmail.com',
             'birthday' => Carbon::now(),
             'cellphone' => 111111111,
+            'active' => true,
             'password' => $user->password
         ]);
 
