@@ -51,12 +51,12 @@ Route::put('/specialities', [\App\Http\Controllers\SpecialityController::class, 
 Route::delete('/specialities/delete/{id}', [\App\Http\Controllers\SpecialityController::class, 'destroy'])->name('specialities.delete');
 
 //HealthPlans Routes
-Route::get('/plans', [App\Http\Controllers\HealthPlanController::class, 'index'])->name('plan.index');
-Route::get('/plans/add', [App\Http\Controllers\HealthPlanController::class, 'create'])->name('plan.add');
-Route::post('/plans', [\App\Http\Controllers\HealthPlanController::class, 'store'])->name('plan.store');
-Route::get('/plans/edit/{id}', [App\Http\Controllers\HealthPlanController::class, 'edit'])->name('plan.edit');
-Route::put('/plans', [App\Http\Controllers\HealthPlanController::class, 'update'])->name('plan.update');
-Route::delete('/patients/delete/{id}', [App\Http\Controllers\HealthPlanController::class, 'destroy'])->name('plan.delete');
+Route::get('/plans', [App\Http\Controllers\HealthPlanController::class, 'index'])->name('plans.index');
+Route::get('/plans/add', [App\Http\Controllers\HealthPlanController::class, 'create'])->name('plans.create');
+Route::post('/plans', [\App\Http\Controllers\HealthPlanController::class, 'store'])->name('plans.store');
+Route::get('/plans/edit/{id}', [App\Http\Controllers\HealthPlanController::class, 'edit'])->name('plans.edit');
+Route::put('/plans', [App\Http\Controllers\HealthPlanController::class, 'update'])->name('plans.update');
+Route::delete('/plans/delete/{id}', [App\Http\Controllers\HealthPlanController::class, 'destroy'])->name('plans.delete');
 
 Route::get('/gerarDados', function () {
     if (DB::table('specialities')->count() == 0) {
