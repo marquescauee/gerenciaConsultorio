@@ -45,10 +45,11 @@ class HealthPlanController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required|min:3|max:40'
+            'name' => 'required|min:3|max:40|unique:health_plans'
         ];
 
         $feedback = [
+            'unique' => 'Este nome já existe registro.',
             'required' => 'O campo :attribute está vazio',
             'name.min' => 'O campo name deve ter no mínimo 3 caracteres.',
             'name.max' => 'O campo name deve ter no máximo 40 caracteres.',
@@ -96,10 +97,11 @@ class HealthPlanController extends Controller
     public function update(Request $request)
     {
         $rules = [
-            'name' => 'required|min:3|max:40'
+            'name' => 'required|min:3|max:40|unique:health_plans'
         ];
 
         $feedback = [
+            'unique' => 'Este nome já existe registro.',
             'required' => 'O campo :attribute está vazio',
             'name.min' => 'O campo name deve ter no mínimo 3 caracteres.',
             'name.max' => 'O campo name deve ter no máximo 40 caracteres.',
