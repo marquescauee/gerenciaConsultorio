@@ -50,6 +50,14 @@ Route::get('/specialities/edit/{id}', [\App\Http\Controllers\SpecialityControlle
 Route::put('/specialities', [\App\Http\Controllers\SpecialityController::class, 'update'])->name('specialities.update');
 Route::delete('/specialities/delete/{id}', [\App\Http\Controllers\SpecialityController::class, 'destroy'])->name('specialities.delete');
 
+//HealthPlans Routes
+Route::get('/plans', [App\Http\Controllers\HealthPlanController::class, 'index'])->name('plans.index');
+Route::get('/plans/add', [App\Http\Controllers\HealthPlanController::class, 'create'])->name('plans.create');
+Route::post('/plans', [\App\Http\Controllers\HealthPlanController::class, 'store'])->name('plans.store');
+Route::get('/plans/edit/{id}', [App\Http\Controllers\HealthPlanController::class, 'edit'])->name('plans.edit');
+Route::put('/plans', [App\Http\Controllers\HealthPlanController::class, 'update'])->name('plans.update');
+Route::delete('/plans/delete/{id}', [App\Http\Controllers\HealthPlanController::class, 'destroy'])->name('plans.delete');
+
 Route::get('/gerarDados', function () {
     if (DB::table('specialities')->count() == 0) {
         DB::table('specialities')->insert([
