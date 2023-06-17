@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class ProceduresController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('auth');
+        $this->middleware('funcionarioMiddleware');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,9 @@ class ProceduresController extends Controller
      */
     public function index()
     {
-        //
+        $procedures = Procedures::all();
+
+        return view('procedures.index', compact('procedures'));
     }
 
     /**
@@ -24,7 +32,7 @@ class ProceduresController extends Controller
      */
     public function create()
     {
-        //
+        return view('procedures.create');
     }
 
     /**
@@ -35,7 +43,24 @@ class ProceduresController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'description' => 'required|min:3|max:40|unique:procedures'
+        ];
+
+        $feedback = [
+            'unique' => 'Este nome já existe registro.',
+            'required' => 'O campo :attribute está vazio',
+            'description.min' => 'O campo description deve ter no mínimo 3 caracteres.',
+            'description.max' => 'O campo description deve ter no máximo 40 caracteres.',
+        ];
+
+        $request->validate($rules, $feedback);
+
+        Procedures::create([
+            'description' => $request->get('description')
+        ]);
+
+        return redirect('/procedures');
     }
 
     /**
@@ -55,9 +80,11 @@ class ProceduresController extends Controller
      * @param  \App\Models\Procedures  $procedures
      * @return \Illuminate\Http\Response
      */
-    public function edit(Procedures $procedures)
+    public function edit($id)
     {
-        //
+        $procedure = Procedures::find($id);
+
+        return view('procedures.edit', compact('procedure'));
     }
 
     /**
@@ -67,9 +94,26 @@ class ProceduresController extends Controller
      * @param  \App\Models\Procedures  $procedures
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Procedures $procedures)
+    public function update(Request $request)
     {
-        //
+        $rules = [
+            'description' => 'required|min:3|max:40|unique:procedures'
+        ];
+
+        $feedback = [
+            'unique' => 'Este nome já existe registro.',
+            'required' => 'O campo :attribute está vazio',
+            'description.min' => 'O campo description deve ter no mínimo 3 caracteres.',
+            'description.max' => 'O campo description deve ter no máximo 40 caracteres.',
+        ];
+
+        $request->validate($rules, $feedback);
+
+        $procedure = Procedures::find($request->get('id'));
+
+        $procedure->update(['description' => $request->get('description')]);
+
+        return redirect('/procedures');
     }
 
     /**
@@ -78,8 +122,10 @@ class ProceduresController extends Controller
      * @param  \App\Models\Procedures  $procedures
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Procedures $procedures)
+    public function destroy($id)
     {
-        //
+        $procedure = Procedures::find($id);
+        $procedure->delete();
+        return redirect('/procedures');
     }
 }

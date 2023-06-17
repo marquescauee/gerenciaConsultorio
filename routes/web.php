@@ -66,6 +66,14 @@ Route::get('/suppliers/edit/{id}', [App\Http\Controllers\SuppliersController::cl
 Route::put('/suppliers', [App\Http\Controllers\SuppliersController::class, 'update'])->name('suppliers.update');
 Route::delete('/suppliers/delete/{id}', [App\Http\Controllers\SuppliersController::class, 'destroy'])->name('suppliers.delete');
 
+//Procedure Routes
+Route::get('/procedures', [\App\Http\Controllers\ProceduresController::class, 'index'])->name('procedures.index');
+Route::get('/procedures/add', [App\Http\Controllers\ProceduresController::class, 'create'])->name('procedures.create');
+Route::post('/procedures', [\App\Http\Controllers\ProceduresController::class, 'store'])->name('procedures.store');
+Route::get('/procedures/edit/{id}', [App\Http\Controllers\ProceduresController::class, 'edit'])->name('procedures.edit');
+Route::put('/procedures', [App\Http\Controllers\ProceduresController::class, 'update'])->name('procedures.update');
+Route::delete('/procedures/delete/{id}', [App\Http\Controllers\ProceduresController::class, 'destroy'])->name('procedures.delete');
+
 Route::get('/gerarDados', function () {
     if (DB::table('specialities')->count() == 0) {
         DB::table('specialities')->insert([

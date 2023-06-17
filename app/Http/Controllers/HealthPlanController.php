@@ -32,8 +32,7 @@ class HealthPlanController extends Controller
      */
     public function create()
     {
-        $plan = new HealthPlan();
-        return view('plans.create', compact('plan'));
+        return view('plans.create');
     }
 
     /**

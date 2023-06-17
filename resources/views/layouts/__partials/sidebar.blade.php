@@ -110,6 +110,13 @@
 
             <div class="d-flex align-items-center divSubItems">
                 <div class="row d-flex subIconsSize">
+                    <img src="{{ asset('/img/icon/robotic-surgery.png') }}" alt="">
+                </div>
+                <a class="d-flex text-decoration-none text-light" href="{{route('procedures.index')}}">Procedimentos</a>
+            </div>
+
+            <div class="d-flex align-items-center divSubItems">
+                <div class="row d-flex subIconsSize">
                     <img src="{{ asset('/img/icon/heart.png') }}" alt="">
                 </div>
                 <a class="d-flex text-decoration-none text-light" href="{{ route('plans.index') }}">Planos</a>
