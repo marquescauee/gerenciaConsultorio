@@ -58,6 +58,14 @@ Route::get('/plans/edit/{id}', [App\Http\Controllers\HealthPlanController::class
 Route::put('/plans', [App\Http\Controllers\HealthPlanController::class, 'update'])->name('plans.update');
 Route::delete('/plans/delete/{id}', [App\Http\Controllers\HealthPlanController::class, 'destroy'])->name('plans.delete');
 
+//Suppliers Routes
+Route::get('/suppliers', [\App\Http\Controllers\SuppliersController::class, 'index'])->name('suppliers.index');
+Route::get('/suppliers/add', [App\Http\Controllers\SuppliersController::class, 'create'])->name('suppliers.create');
+Route::post('/suppliers', [\App\Http\Controllers\SuppliersController::class, 'store'])->name('suppliers.store');
+Route::get('/suppliers/edit/{id}', [App\Http\Controllers\SuppliersController::class, 'edit'])->name('suppliers.edit');
+Route::put('/suppliers', [App\Http\Controllers\SuppliersController::class, 'update'])->name('suppliers.update');
+Route::delete('/suppliers/delete/{id}', [App\Http\Controllers\SuppliersController::class, 'destroy'])->name('suppliers.delete');
+
 Route::get('/gerarDados', function () {
     if (DB::table('specialities')->count() == 0) {
         DB::table('specialities')->insert([

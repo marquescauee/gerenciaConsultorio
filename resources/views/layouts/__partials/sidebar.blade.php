@@ -38,43 +38,60 @@
                 <div class="row d-flex iconSize">
                     <img src="{{ asset('/img/icon/tooth.png') }}" alt="">
                 </div>
-                <a class="d-flex text-decoration-none text-light" href="{{route('home')}}">Gerência Consultório</a>
+                <a class="d-flex text-decoration-none text-light" href="{{ route('home') }}">Gerência Consultório</a>
             </div>
 
 
-            <div class="d-flex align-items-center gap-4 mt-3">
-                <div class="row d-flex iconSize">
-                    <img src="{{ asset('/img/icon/user.png') }}" alt="">
+            @php
+                $user = DB::table('users')
+                    ->join('dentists', 'dentists.id', 'users.id')
+                    ->where('dentists.id', Auth::user()->id)
+                    ->first();
+            @endphp
+
+            @if ($user->admin)
+                <div class="d-flex align-items-center gap-4 mt-3">
+                    <div class="row d-flex iconSize">
+                        <img src="{{ asset('/img/icon/user.png') }}" alt="">
+                    </div>
+                    <a class="d-flex text-decoration-none text-light" href="#">Administrador</a>
                 </div>
-                <a class="d-flex text-decoration-none text-light" href="#">Administrador</a>
-            </div>
+            @else
+                <div class="d-flex align-items-center gap-4 mt-3">
+                    <div class="row d-flex iconSize">
+                        <img src="{{ asset('/img/icon/user.png') }}" alt="">
+                    </div>
+                    <a class="d-flex text-decoration-none text-light" href="#">Dentista</a>
+                </div>
+            @endif
 
             <div class="d-flex align-items-center divSubItems mt-3">
                 <div class="row d-flex subIconsSize">
                     <img src="{{ asset('/img/icon/medal.png') }}" alt="">
                 </div>
-                <a class="d-flex text-decoration-none text-light" href="#">Fornecedores</a>
+                <a class="d-flex text-decoration-none text-light" href="{{ route('suppliers.index') }}">Fornecedores</a>
             </div>
 
             <div class="d-flex align-items-center divSubItems">
                 <div class="row d-flex subIconsSize">
                     <img src="{{ asset('/img/icon/dentist.png') }}" alt="">
                 </div>
-                <a class="d-flex text-decoration-none text-light" href="{{route('dentists.index')}}">Dentistas</a>
+                <a class="d-flex text-decoration-none text-light" href="{{ route('dentists.index') }}">Dentistas</a>
             </div>
 
             <div class="d-flex align-items-center divSubItems">
                 <div class="row d-flex subIconsSize">
                     <img src="{{ asset('/img/icon/multiUser.png') }}" alt="">
                 </div>
-                <a class="d-flex text-decoration-none text-light" href="{{route('home')}}">Pacientes</a>
+                <a class="d-flex text-decoration-none text-light" href="{{ route('home') }}">Pacientes</a>
             </div>
 
             <div class="d-flex align-items-center divSubItems">
                 <div class="row d-flex subIconsSize">
                     <img src="{{ asset('/img/icon/especialidade.png') }}" alt="">
                 </div>
-                <a class="d-flex text-decoration-none text-light" href="{{route('specialities.index')}}">Especialidades</a>
+                <a class="d-flex text-decoration-none text-light"
+                    href="{{ route('specialities.index') }}">Especialidades</a>
             </div>
 
             <div class="d-flex align-items-center divSubItems">
@@ -95,7 +112,7 @@
                 <div class="row d-flex subIconsSize">
                     <img src="{{ asset('/img/icon/heart.png') }}" alt="">
                 </div>
-                <a class="d-flex text-decoration-none text-light" href="{{route('plans.index')}}">Planos</a>
+                <a class="d-flex text-decoration-none text-light" href="{{ route('plans.index') }}">Planos</a>
             </div>
 
             <div class="d-flex align-items-center divSubItems">
