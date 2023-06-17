@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dentists;
+use App\Models\HealthPlanPatient;
 use App\Models\Patient;
 use App\Models\Pessoa;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -71,7 +73,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -85,13 +86,22 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'birthday' => $data['birthday'],
             'cellphone' => $data['cellphone'],
-            'password' => $user->password
+            'password' => $user->password,
+            'active' => true
         ]);
 
         Patient::create([
             'id' => $pessoa->id,
             'cpf' => $data['cpf']
         ]);
+
+        if ($data['convenio'] != 0) {
+            DB::table('health_plans_patients')->insert([
+                'id_health_plan' => $data['convenio'],
+                'id_patient' => $pessoa->id
+            ]);
+        }
+
 
         return $user;
     }

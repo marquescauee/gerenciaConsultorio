@@ -19,7 +19,7 @@
             <input type="hidden" value="{{ $plan->id }}" name="id">
 
             <div class="mb-3">
-                <label for="name" class="form-label ">name:</label>
+                <label for="name" class="form-label ">Nome:</label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" aria-describedby="name" required
                     value="{{ $plan->name }}" name="name">
 

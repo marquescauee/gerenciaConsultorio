@@ -19,7 +19,7 @@
             <input type="hidden" value="{{ $patient->id }}" name="id">
 
             <div class="mb-3">
-                <label for="name" class="form-label ">name:</label>
+                <label for="name" class="form-label ">Nome:</label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                     aria-describedby="name" required value="{{ $patient->name }}" name="name">
 
@@ -43,7 +43,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="cellphone" class="form-label ">cellphone:</label>
+                <label for="cellphone" class="form-label ">Telefone:</label>
                 <input type="text" class="form-control @error('cellphone') is-invalid @enderror" id="cellphone"
                     aria-describedby="cellphone" required value="{{ $patient->cellphone }}" name="cellphone">
 
@@ -60,6 +60,23 @@
                     aria-describedby="birthday" required value="{{ $patient->birthday }}" name="birthday">
 
                 @error('birthday')
+                    <span class="invalid-feedback align" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label for="convenio" class="form-label ">Convênio:</label>
+
+                <select name="convenio" id="convenio" class="form-select @error('convenio') is-invalid @enderror">
+                    <option value="0">Não possuo convênio</option>
+                    @foreach ($convenios as $convenio)
+                        <option value="{{$convenio->id}}">{{$convenio->name}}</option>
+                    @endforeach
+                </select>
+
+                @error('convenio')
                     <span class="invalid-feedback align" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

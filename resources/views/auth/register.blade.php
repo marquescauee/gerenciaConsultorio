@@ -92,6 +92,28 @@
                                 </div>
                             </div>
 
+                            @php
+                                $convenios = DB::table('health_plans')->get();
+                            @endphp
+
+                            <div class="row mb-3">
+                                <label for="convenio" class="form-label col-md-3 col-form-label text-md-end">Convênio:</label>
+                                <div class="col-md-7">
+                                    <select name="convenio" id="convenio" class="form-select @error('convenio') is-invalid @enderror">
+                                        <option value="0">Não possuo convênio</option>
+                                        @foreach ($convenios as $convenio)
+                                            <option value="{{$convenio->id}}">{{$convenio->name}}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('convenio')
+                                        <span class="invalid-feedback align" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <div class="row mb-3">
                                 <label for="password"
                                     class="col-md-3 col-form-label text-md-end">{{ __('Senha') }}</label>

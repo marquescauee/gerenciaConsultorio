@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HealthPlan;
 use App\Models\Patient;
 use App\Models\Pessoa;
+use App\Models\HealthPlanPatient;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -46,7 +48,9 @@ class PatientController extends Controller
      */
     public function create()
     {
-        return view('patients.create');
+        $convenios = HealthPlan::all();
+
+        return view('patients.create', compact('convenios'));
     }
 
     /**
@@ -101,6 +105,13 @@ class PatientController extends Controller
             'cpf' => $request['cpf']
         ]);
 
+        if ($request['convenio'] != 0) {
+            DB::table('health_plans_patients')->insert([
+                'id_health_plan' => $request['convenio'],
+                'id_patient' => $pessoa->id
+            ]);
+        }
+
         return redirect('/patients');
     }
 
@@ -131,9 +142,9 @@ class PatientController extends Controller
         $format = Carbon::parse($patient->birthday)->format('d/m/Y');
 
         $patient->birthday = $format;
+        $convenios = HealthPlan::all();
 
-
-        return view('patients.edit', ['patient' => $patient]);
+        return view('patients.edit', ['patient' => $patient, 'convenios' => $convenios]);
     }
 
     /**
@@ -182,6 +193,21 @@ class PatientController extends Controller
                 'active' => true,
                 'cellphone' => $request['cellphone']
             ]);
+        }
+
+        if ($request['convenio'] != 0) {
+            $convenioPaciente = HealthPlanPatient::where('id_patient', $request['id'])->first();
+            if ($convenioPaciente) {
+                $convenioPaciente->update(['id_health_plan' => $request['convenio']]);
+            } else {
+                DB::table('health_plans_patients')->insert([
+                    'id_health_plan' => $request['convenio'],
+                    'id_patient' => $request['id']
+                ]);
+            }
+        } else {
+            $convenioPaciente = HealthPlanPatient::where('id_patient', $request['id'])->first();
+            $convenioPaciente->delete();
         }
 
         return redirect()->route('home');

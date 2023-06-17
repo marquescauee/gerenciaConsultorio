@@ -119,7 +119,7 @@
                 <div class="row d-flex subIconsSize">
                     <img src="{{ asset('/img/icon/heart.png') }}" alt="">
                 </div>
-                <a class="d-flex text-decoration-none text-light" href="{{ route('plans.index') }}">Planos</a>
+                <a class="d-flex text-decoration-none text-light" href="{{ route('plans.index') }}">Convênios</a>
             </div>
 
             <div class="d-flex align-items-center divSubItems">
