@@ -18,8 +18,9 @@ class CreateAppointmentsTable extends Migration
             $table->unsignedBigInteger("id_procedure");
             $table->unsignedBigInteger("id_patient");
             $table->unsignedBigInteger("id_dentist");
-            $table->string("name");
             $table->string("date");
+            $table->string("start_time");
+            $table->string("end_time");
             $table->timestamps();
 
             $table->foreign("id_procedure")->references("id")->on("procedures");

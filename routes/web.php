@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\Dentists;
+use App\Models\Patient;
+use App\Models\Procedures;
 use App\Models\Speciality;
 use App\Models\User;
 use Carbon\Carbon;
@@ -74,12 +76,19 @@ Route::get('/procedures/edit/{id}', [App\Http\Controllers\ProceduresController::
 Route::put('/procedures', [App\Http\Controllers\ProceduresController::class, 'update'])->name('procedures.update');
 Route::delete('/procedures/delete/{id}', [App\Http\Controllers\ProceduresController::class, 'destroy'])->name('procedures.delete');
 
+//Appointments Routes
+Route::get('/appointments', [\App\Http\Controllers\AppointmentsController::class, 'index'])->name('appointments.index');
+Route::get('/appointments/add', [App\Http\Controllers\AppointmentsController::class, 'create'])->name('appointments.create');
+Route::post('/appointments', [\App\Http\Controllers\AppointmentsController::class, 'store'])->name('appointments.store');
+Route::delete('/appointments/delete/{id}', [App\Http\Controllers\AppointmentsController::class, 'destroy'])->name('appointments.delete');
+
 Route::get('/gerarDados', function () {
     if (DB::table('specialities')->count() == 0) {
         DB::table('specialities')->insert([
             'name' => 'ortodontia'
         ]);
 
+        //create admin dentists
         $user = User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
@@ -107,6 +116,48 @@ Route::get('/gerarDados', function () {
             'CRO' => 'SC-12345',
             'admin' => 1,
         ]);
+
+
+        //create patient
+        $user2 = User::create([
+            'name' => 'paciente1',
+            'email' => 'paciente1@gmail.com',
+            'password' => Hash::make('admin1234'),
+            'funcionario' => 1,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('pessoas')->insert([
+            'id' => $user2->id,
+            'name' => 'paciente1',
+            'email' => 'paciente1@gmail.com',
+            'birthday' => Carbon::now(),
+            'cellphone' => 111111111,
+            'active' => true,
+            'password' => $user2->password
+        ]);
+
+        Patient::create([
+            'id' => $user2->id,
+            'cpf' => '12312312312'
+        ]);
+
+        //create procedure
+        $procedure = Procedures::create([
+            'description' => 'Extração de Dente Siso'
+        ]);
+
+        //create appointment
+        DB::table('appointments')->insert([
+            'id_procedure' => $procedure->id,
+            'id_patient' => $user2->id,
+            'id_dentist' => $user->id,
+            'date' => '2023-06-23',
+            'start_time' => '09:00',
+            'end_time' => '11:00'
+        ]);
+
     }
 
     return redirect('/');

@@ -19,10 +19,6 @@
         margin-bottom: 20px;
     }
 
-    .spacingPowerAdjust {
-        margin-top: 150px;
-    }
-
     .botoes {
         background: none;
         border: none;
@@ -65,89 +61,158 @@
                 </div>
             @endif
 
-            <div class="d-flex align-items-center divSubItems mt-3">
+            {{-- <div class="d-flex align-items-center divSubItems mt-3">
                 <div class="row d-flex subIconsSize">
                     <img src="{{ asset('/img/icon/medal.png') }}" alt="">
                 </div>
                 <a class="d-flex text-decoration-none text-light" href="{{ route('suppliers.index') }}">Fornecedores</a>
-            </div>
+            </div> --}}
 
-            <div class="d-flex align-items-center divSubItems">
-                <div class="row d-flex subIconsSize">
-                    <img src="{{ asset('/img/icon/dentist.png') }}" alt="">
-                </div>
-                <a class="d-flex text-decoration-none text-light" href="{{ route('dentists.index') }}">Dentistas</a>
-            </div>
-
-            <div class="d-flex align-items-center divSubItems">
-                <div class="row d-flex subIconsSize">
-                    <img src="{{ asset('/img/icon/multiUser.png') }}" alt="">
-                </div>
-                <a class="d-flex text-decoration-none text-light" href="{{ route('home') }}">Pacientes</a>
-            </div>
-
-            <div class="d-flex align-items-center divSubItems">
-                <div class="row d-flex subIconsSize">
-                    <img src="{{ asset('/img/icon/especialidade.png') }}" alt="">
-                </div>
-                <a class="d-flex text-decoration-none text-light"
-                    href="{{ route('specialities.index') }}">Especialidades</a>
-            </div>
-
-            <div class="d-flex align-items-center divSubItems">
-                <div class="row d-flex subIconsSize">
-                    <img src="{{ asset('/img/icon/search.png') }}" alt="">
-                </div>
-                <a class="d-flex text-decoration-none text-light" href="#">Consultas</a>
-            </div>
-
-            <div class="d-flex align-items-center divSubItems">
-                <div class="row d-flex subIconsSize">
-                    <img src="{{ asset('/img/icon/medicines.png') }}" alt="">
-                </div>
-                <a class="d-flex text-decoration-none text-light" href="#">Medicamentos</a>
-            </div>
-
-            <div class="d-flex align-items-center divSubItems">
-                <div class="row d-flex subIconsSize">
-                    <img src="{{ asset('/img/icon/robotic-surgery.png') }}" alt="">
-                </div>
-                <a class="d-flex text-decoration-none text-light" href="{{route('procedures.index')}}">Procedimentos</a>
-            </div>
-
-            <div class="d-flex align-items-center divSubItems">
-                <div class="row d-flex subIconsSize">
-                    <img src="{{ asset('/img/icon/heart.png') }}" alt="">
-                </div>
-                <a class="d-flex text-decoration-none text-light" href="{{ route('plans.index') }}">Convênios</a>
-            </div>
-
-            <div class="d-flex align-items-center divSubItems">
-                <div class="row d-flex subIconsSize">
-                    <img src="{{ asset('/img/icon/trend.png') }}" alt="">
-                </div>
-                <a class="d-flex text-decoration-none text-light" href="#">Relatórios</a>
-            </div>
-
-            <div class="d-flex spacingPowerAdjust">
-                <div class="d-flex gap-3 flex-column">
-                    <div class="d-flex align-items-center divSubItems">
-                        <div class="row d-flex subIconsSize">
-                            <img src="{{ asset('/img/icon/settings.png') }}" alt="">
-                        </div>
-                        <a class="d-flex text-decoration-none text-light" href="#">Ajustes</a>
+            @if ($user->admin)
+                <div class="d-flex align-items-center divSubItems mt-3">
+                    <div class="row d-flex subIconsSize">
+                        <img src="{{ asset('/img/icon/dentist.png') }}" alt="">
                     </div>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <div class="d-flex align-items-center divSubItems">
-                            <button class="botoes row d-flex subIconsSize">
-                                <img src="{{ asset('/img/icon/power.png') }}" alt="">
-                            </button>
-                            <button class="botoes my-0 d-flex text-decoration-none text-light">Sair</button>
-                        </div>
-                    </form>
+                    <a class="d-flex text-decoration-none text-light" href="{{ route('dentists.index') }}">Dentistas</a>
                 </div>
-            </div>
+
+                <div class="d-flex align-items-center divSubItems">
+                    <div class="row d-flex subIconsSize">
+                        <img src="{{ asset('/img/icon/multiUser.png') }}" alt="">
+                    </div>
+                    <a class="d-flex text-decoration-none text-light" href="{{ route('home') }}">Pacientes</a>
+                </div>
+
+                <div class="d-flex align-items-center divSubItems">
+                    <div class="row d-flex subIconsSize">
+                        <img src="{{ asset('/img/icon/especialidade.png') }}" alt="">
+                    </div>
+                    <a class="d-flex text-decoration-none text-light"
+                        href="{{ route('specialities.index') }}">Especialidades</a>
+                </div>
+
+                <div class="d-flex align-items-center divSubItems">
+                    <div class="row d-flex subIconsSize">
+                        <img src="{{ asset('/img/icon/search.png') }}" alt="">
+                    </div>
+                    <a class="d-flex text-decoration-none text-light"
+                        href="{{ route('appointments.index') }}">Agendamentos</a>
+                </div>
+
+                <div class="d-flex align-items-center divSubItems">
+                    <div class="row d-flex subIconsSize">
+                        <img src="{{ asset('/img/icon/medicines.png') }}" alt="">
+                    </div>
+                    <a class="d-flex text-decoration-none text-light" href="#">Medicamentos</a>
+                </div>
+
+                <div class="d-flex align-items-center divSubItems">
+                    <div class="row d-flex subIconsSize">
+                        <img src="{{ asset('/img/icon/robotic-surgery.png') }}" alt="">
+                    </div>
+                    <a class="d-flex text-decoration-none text-light"
+                        href="{{ route('procedures.index') }}">Procedimentos</a>
+                </div>
+
+                <div class="d-flex align-items-center divSubItems">
+                    <div class="row d-flex subIconsSize">
+                        <img src="{{ asset('/img/icon/heart.png') }}" alt="">
+                    </div>
+                    <a class="d-flex text-decoration-none text-light" href="{{ route('plans.index') }}">Convênios</a>
+                </div>
+
+                <div class="d-flex align-items-center divSubItems">
+                    <div class="row d-flex subIconsSize">
+                        <img src="{{ asset('/img/icon/atestado.png') }}" alt="">
+                    </div>
+                    <a class="d-flex text-decoration-none text-light" href="#">Atestados</a>
+                </div>
+
+                <div class="d-flex align-items-center divSubItems">
+                    <div class="row d-flex subIconsSize">
+                        <img src="{{ asset('/img/icon/prescricao.png') }}" alt="">
+                    </div>
+                    <a class="d-flex text-decoration-none text-light" href="#">Receitas</a>
+                </div>
+
+                <div class="d-flex align-items-center divSubItems">
+                    <div class="row d-flex subIconsSize">
+                        <img src="{{ asset('/img/icon/trend.png') }}" alt="">
+                    </div>
+                    <a class="d-flex text-decoration-none text-light" href="#">Relatórios</a>
+                </div>
+
+
+                <div class="d-flex" style="margin-top: 50px">
+                    <div class="d-flex gap-3 flex-column">
+                        <div class="d-flex align-items-center divSubItems">
+                            <div class="row d-flex subIconsSize">
+                                <img src="{{ asset('/img/icon/settings.png') }}" alt="">
+                            </div>
+                            <a class="d-flex text-decoration-none text-light" href="#">Ajustes</a>
+                        </div>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <div class="d-flex align-items-center divSubItems">
+                                <button class="botoes row d-flex subIconsSize">
+                                    <img src="{{ asset('/img/icon/power.png') }}" alt="">
+                                </button>
+                                <button class="botoes my-0 d-flex text-decoration-none text-light">Sair</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            @else
+                <div class="d-flex align-items-center divSubItems mt-5">
+                    <div class="row d-flex subIconsSize">
+                        <img src="{{ asset('/img/icon/multiUser.png') }}" alt="">
+                    </div>
+                    <a class="d-flex text-decoration-none text-light" href="{{ route('home') }}">Pacientes</a>
+                </div>
+
+                <div class="d-flex align-items-center divSubItems">
+                    <div class="row d-flex subIconsSize">
+                        <img src="{{ asset('/img/icon/search.png') }}" alt="">
+                    </div>
+                    <a class="d-flex text-decoration-none text-light"
+                        href="{{ route('appointments.index') }}">Agendamentos</a>
+                </div>
+
+                <div class="d-flex align-items-center divSubItems">
+                    <div class="row d-flex subIconsSize">
+                        <img src="{{ asset('/img/icon/atestado.png') }}" alt="">
+                    </div>
+                    <a class="d-flex text-decoration-none text-light" href="#">Atestados</a>
+                </div>
+
+                <div class="d-flex align-items-center divSubItems">
+                    <div class="row d-flex subIconsSize">
+                        <img src="{{ asset('/img/icon/prescricao.png') }}" alt="">
+                    </div>
+                    <a class="d-flex text-decoration-none text-light" href="#">Receitas</a>
+                </div>
+
+                <div class="d-flex" style="margin-top: 450px">
+                    <div class="d-flex gap-3 flex-column">
+                        <div class="d-flex align-items-center divSubItems">
+                            <div class="row d-flex subIconsSize">
+                                <img src="{{ asset('/img/icon/settings.png') }}" alt="">
+                            </div>
+                            <a class="d-flex text-decoration-none text-light" href="#">Ajustes</a>
+                        </div>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <div class="d-flex align-items-center divSubItems">
+                                <button class="botoes row d-flex subIconsSize">
+                                    <img src="{{ asset('/img/icon/power.png') }}" alt="">
+                                </button>
+                                <button class="botoes my-0 d-flex text-decoration-none text-light">Sair</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            @endif
+
         </li>
     </ul>
 </div>
