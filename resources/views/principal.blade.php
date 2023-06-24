@@ -1,6 +1,34 @@
 @extends('layouts.app')
 
 @section('content')
+    <style>
+        body,
+        main,
+        nav {
+            background: #141E30;
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #243B55, #141E30);
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #243B55, #141E30);
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            overflow: auto
+        }
+
+        .botaoConsulta {
+            display: flex;
+            width: 50%;
+            justify-content: center;
+            align-items: center;
+            margin: 3rem auto;
+            border: none;
+            background: lightblue;
+            height: 70px;
+            font-weight: bold;
+            font-size: 1.3rem;
+            border-radius: 4px;
+        }
+    </style>
+
     <div class="container my-5">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
@@ -33,9 +61,40 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
+
+        <div>
+            <button class="botaoConsulta">
+                Marque Sua Consulta!
+            </button>
+        </div>
     </div>
 
-    <div class="ultima-div">
+    <div class="d-flex justify-content-evenly align-items-center " style="margin: 100px 0px; font-size: 20px;">
+        <div class="card"
+            style="width: 30rem; text-align: center; background-color: black; color: white; box-shadow: 10px 5px 5px black;">
+            <img src="{{ asset('img/img4.jpg') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="card-text">Temos os melhores profissionais da região e possuímos um controle de qualidade rigoroso
+                    em nosso atendimento, visando o bem-estar do cliente.</p>
+            </div>
+        </div>
 
+        <div class="card"
+            style="width: 30rem;  text-align: center; background-color: black; color: white; box-shadow: 10px 5px 5px black;">
+            <img src="{{ asset('img/img5.jpg') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="card-text">Enquanto a sua vez não chega, você pode aguardar em nosso espaço disponível
+                    para você.</p>
+            </div>
+        </div>
+
+        <div class="card"
+            style="width: 30rem; text-align: center; background-color: black; color: white; box-shadow: 10px 5px 5px black;">
+            <img src="{{ asset('img/img6.png') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="card-text">Nossos ambientes de trabalho são modernos e contam com ótimos equipamentos de marcas referência no mercado.</p>
+            </div>
+        </div>
     </div>
+
 @endsection
