@@ -11,8 +11,12 @@
             /* Chrome 10-25, Safari 5.1-6 */
             background: linear-gradient(to right, #243B55, #141E30);
             /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-            overflow: auto
         }
+
+        body, main {
+            overflow: auto;
+        }
+        
 
         .botaoConsulta {
             display: flex;
@@ -26,6 +30,8 @@
             font-weight: bold;
             font-size: 1.3rem;
             border-radius: 4px;
+            text-decoration: none;
+            color: black
         }
     </style>
 
@@ -63,9 +69,9 @@
         </div>
 
         <div>
-            <button class="botaoConsulta">
+            <a class="botaoConsulta" href="{{route('appointments.clients.create')}}">
                 Marque Sua Consulta!
-            </button>
+            </a>
         </div>
     </div>
 

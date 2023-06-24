@@ -82,6 +82,8 @@ Route::get('/appointments/add', [App\Http\Controllers\AppointmentsController::cl
 Route::post('/appointments', [\App\Http\Controllers\AppointmentsController::class, 'store'])->name('appointments.store');
 Route::delete('/appointments/delete/{id}', [App\Http\Controllers\AppointmentsController::class, 'destroy'])->name('appointments.delete');
 
+Route::get('/appointments/clients', [App\Http\Controllers\AppointmentsClientsController::class, 'create'])->name('appointments.clients.create');
+
 Route::get('/gerarDados', function () {
     if (DB::table('specialities')->count() == 0) {
         DB::table('specialities')->insert([
@@ -122,8 +124,8 @@ Route::get('/gerarDados', function () {
         $user2 = User::create([
             'name' => 'paciente1',
             'email' => 'paciente1@gmail.com',
-            'password' => Hash::make('admin1234'),
-            'funcionario' => 1,
+            'password' => Hash::make('teste1234'),
+            'funcionario' => 0,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
