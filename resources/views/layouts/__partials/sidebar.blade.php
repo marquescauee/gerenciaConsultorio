@@ -130,7 +130,7 @@
 
                 <div class="d-flex align-items-center divSubItems">
                     <div class="row d-flex subIconsSize">
-                        <img src="{{ asset('/img/icon/prescricao.png') }}" alt="">
+                        <img src="{{ asset('/img/icon/receita.png') }}" alt="">
                     </div>
                     <a class="d-flex text-decoration-none text-light" href="#">Receitas</a>
                 </div>
@@ -187,7 +187,7 @@
 
                 <div class="d-flex align-items-center divSubItems">
                     <div class="row d-flex subIconsSize">
-                        <img src="{{ asset('/img/icon/prescricao.png') }}" alt="">
+                        <img src="{{ asset('/img/icon/receita.png') }}" alt="">
                     </div>
                     <a class="d-flex text-decoration-none text-light" href="#">Receitas</a>
                 </div>
