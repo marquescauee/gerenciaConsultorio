@@ -126,9 +126,13 @@ class AppointmentsController extends Controller
             'end_time' => $this->tabelaHorarios($procedimento, $request->time)
         ]);
 
+        $procedure = Procedures::where('id', $request->procedure)->first()->description;
 
+        $date = Carbon::parse($request->date)->format('d/m/Y');
 
-        Mail::to($patientEmail)->send(new MailNotify(Auth::user(), $date, $request->time, $procedure));
+        $time = $request->time;
+
+        Mail::to($patientEmail)->send(new MailNotify(Auth::user(), $date, $time, $procedure));
 
         return redirect()->route('appointments.index');
     }
