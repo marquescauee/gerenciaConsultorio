@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agenda;
 use App\Models\Appointments;
 use App\Models\Patient;
 use App\Models\Procedures;
@@ -74,7 +75,7 @@ class AppointmentsController extends Controller
                 $cont = 1;
                 $timeRemove = $hoursAvailable[$key + $cont];
 
-                while($timeRemove < $appointment->end_time) {
+                while ($timeRemove < $appointment->end_time) {
                     unset($hoursAvailable[$key + $cont]);
                     $cont++;
                     $timeRemove = $hoursAvailable[$key + $cont];
@@ -175,6 +176,53 @@ class AppointmentsController extends Controller
             return view('appointments.setDate', compact('procedure', 'patient'))->with('errorDay', 'Não selecione finais de semana');
         }
 
+        $day = Carbon::parse($request->date)->dayName;
+
+        $exists = false;
+
+        $daysAvailable = Agenda::where('id_dentist', Auth::user()->id)->get()->toArray();
+
+        $daysOfWeek = [];
+
+        foreach ($daysAvailable as $dayAvailable) {
+            array_push($daysOfWeek, $dayAvailable['day']);
+            if ($dayAvailable['day'] === $day) {
+                $exists = true;
+            }
+        }
+
+        for ($i = 0; $i < sizeof($daysOfWeek); $i++) {
+            if ($daysOfWeek[$i] === 'Monday') {
+                $daysOfWeek[$i] = 'Segunda';
+            }
+
+            if ($daysOfWeek[$i] === 'Tuesday') {
+                $daysOfWeek[$i] = 'Terça';
+            }
+
+            if ($daysOfWeek[$i] === 'Wednesday') {
+                $daysOfWeek[$i] = 'Quarta';
+            }
+
+            if ($daysOfWeek[$i] === 'Thursday') {
+                $daysOfWeek[$i] = 'Quinta';
+            }
+
+            if ($daysOfWeek[$i] === 'Friday') {
+                $daysOfWeek[$i] = 'Sexta';
+            }
+        }
+
+
+        $formatedErroString = 'Este dentista não atende no dia selecionado, somente às ' . implode('s, ', $daysOfWeek);
+
+        $formatedErroString .= 's.';
+
+
+        if (!$exists) {
+            return view('appointments.setDate', compact('patient', 'procedure', 'date'))->with('errorDay', $formatedErroString);
+        }
+
         return $this->createSetTime($procedure, $patient, $date);
     }
 
@@ -203,7 +251,7 @@ class AppointmentsController extends Controller
                     if ($key + $cont > sizeof($hoursAvailable)) {
                         break;
                     }
-                    if(!array_key_exists(($key + $cont), $hoursAvailable)) {
+                    if (!array_key_exists(($key + $cont), $hoursAvailable)) {
                         break;
                     }
                     $timeRemove = $hoursAvailable[$key + $cont];
@@ -242,7 +290,7 @@ class AppointmentsController extends Controller
                     if ($key + $cont > sizeof($hoursAvailable)) {
                         break;
                     }
-                    if(!array_key_exists(($key + $cont), $hoursAvailable)) {
+                    if (!array_key_exists(($key + $cont), $hoursAvailable)) {
                         break;
                     }
                     $timeRemove = $hoursAvailable[$key + $cont];

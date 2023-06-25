@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Agenda;
 use App\Models\Dentists;
 use App\Models\Patient;
 use App\Models\Procedures;
@@ -102,6 +103,10 @@ Route::post('/appointments/patients/setTime', [App\Http\Controllers\Appointments
 Route::post('/appointments/clients/setTime', [App\Http\Controllers\AppointmentsClientsController::class, 'setTime'])->name('appointments.patients.setTime');
 
 
+//Agenda Routes
+Route::get('/agendas', [App\Http\Controllers\AgendaController::class, 'index'])->name('agendas.index');
+Route::get('/agendas/add', [App\Http\Controllers\AgendaController::class, 'create'])->name('agendas.create');
+Route::post('/agendas', [\App\Http\Controllers\AgendaController::class, 'store'])->name('agendas.store');
 
 //Generate Start Data
 Route::get('/gerarDados', function () {
@@ -171,6 +176,98 @@ Route::get('/gerarDados', function () {
             'id_speciality' => $speciality->id
         ]);
 
+        Procedures::create([
+            'description' => 'Avaliação de Sisos',
+            'id_speciality' => $speciality->id
+        ]);
+
+        //create agenda
+        Agenda::create([
+            'id_dentist' => $user->id,
+            'day' => 'Monday'
+        ]);
+
+        // Agenda::create([
+        //     'id_dentist' => $user->id,
+        //     'day' => 'Monday',
+        //     'time' => '09:30'
+        // ]);
+        // Agenda::create([
+        //     'id_dentist' => $user->id,
+        //     'day' => 'Monday',
+        //     'time' => '10:00'
+        // ]);
+        // Agenda::create([
+        //     'id_dentist' => $user->id,
+        //     'day' => 'Monday',
+        //     'time' => '10:30'
+        // ]);
+        // Agenda::create([
+        //     'id_dentist' => $user->id,
+        //     'day' => 'Monday',
+        //     'time' => '11:00'
+        // ]);
+        // Agenda::create([
+        //     'id_dentist' => $user->id,
+        //     'day' => 'Monday',
+        //     'time' => '11:30'
+        // ]);
+        // Agenda::create([
+        //     'id_dentist' => $user->id,
+        //     'day' => 'Monday',
+        //     'time' => '12:00'
+        // ]);
+        // Agenda::create([
+        //     'id_dentist' => $user->id,
+        //     'day' => 'Monday',
+        //     'time' => '12:30'
+        // ]);
+        // Agenda::create([
+        //     'id_dentist' => $user->id,
+        //     'day' => 'Monday',
+        //     'time' => '13:00'
+        // ]);
+        // Agenda::create([
+        //     'id_dentist' => $user->id,
+        //     'day' => 'Monday',
+        //     'time' => '13:30'
+        // ]);
+        // Agenda::create([
+        //     'id_dentist' => $user->id,
+        //     'day' => 'Monday',
+        //     'time' => '14:00'
+        // ]);
+        // Agenda::create([
+        //     'id_dentist' => $user->id,
+        //     'day' => 'Monday',
+        //     'time' => '14:30'
+        // ]);
+        // Agenda::create([
+        //     'id_dentist' => $user->id,
+        //     'day' => 'Monday',
+        //     'time' => '15:00'
+        // ]);
+        // Agenda::create([
+        //     'id_dentist' => $user->id,
+        //     'day' => 'Monday',
+        //     'time' => '15:30'
+        // ]);
+        // Agenda::create([
+        //     'id_dentist' => $user->id,
+        //     'day' => 'Monday',
+        //     'time' => '16:00'
+        // ]);
+        // Agenda::create([
+        //     'id_dentist' => $user->id,
+        //     'day' => 'Monday',
+        //     'time' => '16:30'
+        // ]);
+        // Agenda::create([
+        //     'id_dentist' => $user->id,
+        //     'day' => 'Monday',
+        //     'time' => '17:00'
+        // ]);
+
         //create appointment
         DB::table('appointments')->insert([
             'id_procedure' => $procedure->id,
@@ -180,7 +277,6 @@ Route::get('/gerarDados', function () {
             'start_time' => '09:00',
             'end_time' => '11:00'
         ]);
-
     }
 
     return redirect('/');

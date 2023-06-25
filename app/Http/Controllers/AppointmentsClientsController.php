@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agenda;
 use App\Models\Appointments;
 use App\Models\Dentists;
 use App\Models\Procedures;
@@ -53,12 +54,6 @@ class AppointmentsClientsController extends Controller
         return view('appointments.patients.setDate', compact('procedure', 'dentist'));
     }
 
-    // public function createSetDate(Request $request) {
-    //     $procedure = $request->procedure;
-
-    //     return view('appointments.patients.setDate', compact('procedure'));
-    // }
-
     public function setDate(Request $request)
     {
         $procedure = $request->procedure;
@@ -69,6 +64,59 @@ class AppointmentsClientsController extends Controller
 
         if ($data === 'Sunday' || $data === 'Saturday') {
             return view('appointments.patients.setDate', compact('procedure', 'date', 'dentist'))->with('errorDay', 'Não atendemos aos finais de semana.');
+        }
+
+        $data = Carbon::parse($request->date)->dayName;
+
+        if ($data === 'Sunday' || $data === 'Saturday') {
+            return view('appointments.patients.setDate', compact('procedure', 'patient'))->with('errorDay', 'Não selecione finais de semana');
+        }
+
+        $day = Carbon::parse($request->date)->dayName;
+
+        $exists = false;
+
+        $daysAvailable = Agenda::where('id_dentist', $dentist)->get()->toArray();
+
+        $daysOfWeek = [];
+
+        foreach ($daysAvailable as $dayAvailable) {
+            array_push($daysOfWeek, $dayAvailable['day']);
+            if ($dayAvailable['day'] === $day) {
+                $exists = true;
+            }
+        }
+
+        for ($i = 0; $i < sizeof($daysOfWeek); $i++) {
+            if ($daysOfWeek[$i] === 'Monday') {
+                $daysOfWeek[$i] = 'Segunda';
+            }
+
+            if ($daysOfWeek[$i] === 'Tuesday') {
+                $daysOfWeek[$i] = 'Terça';
+            }
+
+            if ($daysOfWeek[$i] === 'Wednesday') {
+                $daysOfWeek[$i] = 'Quarta';
+            }
+
+            if ($daysOfWeek[$i] === 'Thursday') {
+                $daysOfWeek[$i] = 'Quinta';
+            }
+
+            if ($daysOfWeek[$i] === 'Friday') {
+                $daysOfWeek[$i] = 'Sexta';
+            }
+        }
+
+
+        $formatedErroString = 'Este dentista não atende no dia selecionado, somente às ' . implode('s, ', $daysOfWeek);
+
+        $formatedErroString .= 's.';
+
+
+        if (!$exists) {
+            return view('appointments.patients.setDate', compact('dentist', 'procedure', 'date'))->with('errorDay', $formatedErroString);
         }
 
         return $this->createSetTime($procedure, $date, $dentist);

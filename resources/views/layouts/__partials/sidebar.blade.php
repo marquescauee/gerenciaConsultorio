@@ -28,7 +28,7 @@
 
 <div style="background-color: #66737e;" class="d-flex mainDiv h-100">
     <ul class="d-flex mt-4">
-        <li class="d-flex flex-column gap-3">
+        <li class="d-flex flex-column gap-2">
 
             <div class="d-flex align-items-center gap-4">
                 <div class="row d-flex iconSize">
@@ -78,9 +78,16 @@
 
                 <div class="d-flex align-items-center divSubItems">
                     <div class="row d-flex subIconsSize">
-                        <img src="{{ asset('/img/icon/multiUser.png') }}" alt="">
+                        <img src="{{ asset('/img/icon/calendario.png') }}" alt="">
                     </div>
                     <a class="d-flex text-decoration-none text-light" href="{{ route('home') }}">Pacientes</a>
+                </div>
+
+                <div class="d-flex align-items-center divSubItems">
+                    <div class="row d-flex subIconsSize">
+                        <img src="{{ asset('/img/icon/multiUser.png') }}" alt="">
+                    </div>
+                    <a class="d-flex text-decoration-none text-light" href="{{ route('agendas.index') }}">Agendas</a>
                 </div>
 
                 <div class="d-flex align-items-center divSubItems">
@@ -144,7 +151,7 @@
 
 
                 <div class="d-flex" style="margin-top: 50px">
-                    <div class="d-flex gap-3 flex-column">
+                    <div class="d-flex gap-2 flex-column">
                         <div class="d-flex align-items-center divSubItems">
                             <div class="row d-flex subIconsSize">
                                 <img src="{{ asset('/img/icon/settings.png') }}" alt="">
@@ -193,7 +200,7 @@
                 </div>
 
                 <div class="d-flex" style="margin-top: 450px">
-                    <div class="d-flex gap-3 flex-column">
+                    <div class="d-flex gap-2 flex-column">
                         <div class="d-flex align-items-center divSubItems">
                             <div class="row d-flex subIconsSize">
                                 <img src="{{ asset('/img/icon/settings.png') }}" alt="">

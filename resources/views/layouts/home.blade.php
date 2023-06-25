@@ -68,14 +68,14 @@
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link defaultSize linkNav"
+                                <li class="nav-item mx-3">
+                                    <a class=" defaultSize linkNav"
                                         href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link defaultSize linkNav"
+                                    <a class="defaultSize linkNav"
                                         href="{{ route('register') }}">{{ __('Cadastre-se') }}</a>
                                 </li>
                             @endif
