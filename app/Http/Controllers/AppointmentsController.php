@@ -58,6 +58,29 @@ class AppointmentsController extends Controller
         $procedure = $request->procedure;
         $date = $request->date;
 
+        $hoursAvailable = ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00"];
+
+        $appointmentsOnSelectedDay = DB::table('appointments')
+            ->join('dentists', 'dentists.id', 'appointments.id_dentist')
+            ->where('dentists.id', Auth::user()->id)
+            ->where('appointments.date', $date)
+            ->get();
+
+        foreach ($appointmentsOnSelectedDay as $appointment) {
+
+            if (($key = array_search($appointment->start_time, $hoursAvailable)) !== false) {
+                unset($hoursAvailable[$key]);
+
+                $cont = 1;
+                $timeRemove = $hoursAvailable[$key + $cont];
+
+                while($timeRemove < $appointment->end_time) {
+                    unset($hoursAvailable[$key + $cont]);
+                    $cont++;
+                    $timeRemove = $hoursAvailable[$key + $cont];
+                }
+            }
+        }
 
         $appointmentOnRequestDay = DB::table('appointments')
             ->join('dentists', 'dentists.id', 'appointments.id_dentist')
@@ -67,11 +90,11 @@ class AppointmentsController extends Controller
 
         foreach ($appointmentOnRequestDay as $appointment) {
             if ($appointment->start_time === $request->time || $appointment->end_time === $request->time) {
-                return view('appointments.setTime', compact('patient', 'procedure', 'date'))->with('errorTime', 'Já existe uma consulta para este horário. Tente novamente.');
+                return view('appointments.setTime', compact('patient', 'procedure', 'date', 'hoursAvailable'))->with('errorTime', 'Conflito de horários. Visite seus agendamentos para visualizar seus horários livres.');
             }
 
             if ($request->time > $appointment->start_time && $request->time < $appointment->end_time) {
-                return view('appointments.setTime', compact('patient', 'procedure', 'date'))->with('errorTime', 'Já existe uma consulta para este horário. Tente novamente.');
+                return view('appointments.setTime', compact('patient', 'procedure', 'date', 'hoursAvailable'))->with('errorTime', 'Conflito de horários. Visite seus agendamentos para visualizar seus horários livres.');
             }
         }
 
@@ -155,17 +178,80 @@ class AppointmentsController extends Controller
         return $this->createSetTime($procedure, $patient, $date);
     }
 
-    public function createSetTime($procedure, $patient, $date) {
-        return view('appointments.setTime', compact('procedure', 'patient', 'date'));
+    public function createSetTime($procedure, $patient, $date)
+    {
+
+        $hoursAvailable = ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00"];
+
+        $appointmentsOnSelectedDay = DB::table('appointments')
+            ->join('dentists', 'dentists.id', 'appointments.id_dentist')
+            ->where('dentists.id', Auth::user()->id)
+            ->where('appointments.date', $date)
+            ->get();
+
+        foreach ($appointmentsOnSelectedDay as $appointment) {
+
+            if (($key = array_search($appointment->start_time, $hoursAvailable)) !== false) {
+                unset($hoursAvailable[$key]);
+
+                $cont = 1;
+                $timeRemove = $hoursAvailable[$key + $cont];
+
+                while ($timeRemove < $appointment->end_time) {
+                    unset($hoursAvailable[$key + $cont]);
+                    $cont++;
+                    if ($key + $cont > sizeof($hoursAvailable)) {
+                        break;
+                    }
+                    if(!array_key_exists(($key + $cont), $hoursAvailable)) {
+                        break;
+                    }
+                    $timeRemove = $hoursAvailable[$key + $cont];
+                }
+            }
+        }
+
+        return view('appointments.setTime', compact('procedure', 'patient', 'date', 'hoursAvailable'));
     }
 
     public function setTime(Request $request)
     {
+        $hoursAvailable = ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00"];
 
-        $horario = substr($request->time, 0, 2);
+        $date = $request->date;
+        $procedure = $request->procedure;
+        $patient = $request->patient;
 
-        if ($horario < 9 || $horario > 17) {
-            return view('appointments.setTime', compact('procedure', 'patient'))->with('errorTime', 'Selecione um horário entre 09 e 17');
+        $appointmentsOnSelectedDay = DB::table('appointments')
+            ->join('dentists', 'dentists.id', 'appointments.id_dentist')
+            ->where('dentists.id', Auth::user()->id)
+            ->where('appointments.date', $date)
+            ->get();
+
+        foreach ($appointmentsOnSelectedDay as $appointment) {
+
+            if (($key = array_search($appointment->start_time, $hoursAvailable)) !== false) {
+                unset($hoursAvailable[$key]);
+
+                $cont = 1;
+                $timeRemove = $hoursAvailable[$key + $cont];
+
+                while ($timeRemove < $appointment->end_time) {
+                    unset($hoursAvailable[$key + $cont]);
+                    $cont++;
+                    if ($key + $cont > sizeof($hoursAvailable)) {
+                        break;
+                    }
+                    if(!array_key_exists(($key + $cont), $hoursAvailable)) {
+                        break;
+                    }
+                    $timeRemove = $hoursAvailable[$key + $cont];
+                }
+            }
+        }
+
+        if ($request->time === null) {
+            return view('appointments.setTime', compact('procedure', 'patient', 'date', 'hoursAvailable'))->with('errorTime', 'Selecione um horário');
         }
 
         return $this->store($request);

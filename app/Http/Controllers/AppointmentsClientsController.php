@@ -17,33 +17,36 @@ class AppointmentsClientsController extends Controller
         $this->middleware('auth');
     }
 
-    public function create() {
+    public function create()
+    {
 
         $procedures = Procedures::all();
 
         return view('appointments.patients.create', compact('procedures'));
     }
 
-    public function createSetDentist(Request $request) {
+    public function createSetDentist(Request $request)
+    {
         $procedure = $request->procedure;
 
         $speciality = DB::table('procedures')
-                        ->join('specialities', 'specialities.id', 'procedures.id_speciality')
-                        ->where('procedures.id', $procedure)
-                        ->first();
+            ->join('specialities', 'specialities.id', 'procedures.id_speciality')
+            ->where('procedures.id', $procedure)
+            ->first();
 
 
         $dentists = DB::table('dentists')
-                        ->join('specialities', 'specialities.id', 'dentists.speciality_id')
-                        ->join('pessoas', 'pessoas.id', 'dentists.id')
-                        ->where('specialities.id', $speciality->id)
-                        ->get();
+            ->join('specialities', 'specialities.id', 'dentists.speciality_id')
+            ->join('pessoas', 'pessoas.id', 'dentists.id')
+            ->where('specialities.id', $speciality->id)
+            ->get();
 
 
         return view('appointments.patients.setDentist', compact('procedure', 'dentists'));
     }
 
-    public function setDentist(Request $request) {
+    public function setDentist(Request $request)
+    {
         $procedure = $request->procedure;
         $dentist = $request->dentist;
 
@@ -56,7 +59,8 @@ class AppointmentsClientsController extends Controller
     //     return view('appointments.patients.setDate', compact('procedure'));
     // }
 
-    public function setDate(Request $request) {
+    public function setDate(Request $request)
+    {
         $procedure = $request->procedure;
         $dentist = $request->dentist;
         $date = $request->date;
@@ -70,16 +74,75 @@ class AppointmentsClientsController extends Controller
         return $this->createSetTime($procedure, $date, $dentist);
     }
 
-    public function createSetTime($procedure, $date, $dentist) {
-        return view('appointments.patients.setTime', compact('procedure', 'date', 'dentist'));
+    public function createSetTime($procedure, $date, $dentist)
+    {
+
+        $hoursAvailable = ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00"];
+
+        $appointmentsOnSelectedDay = DB::table('appointments')
+            ->join('dentists', 'dentists.id', 'appointments.id_dentist')
+            ->where('dentists.id', $dentist)
+            ->where('appointments.date', $date)
+            ->get();
+
+        foreach ($appointmentsOnSelectedDay as $appointment) {
+
+            if (($key = array_search($appointment->start_time, $hoursAvailable)) !== false) {
+                unset($hoursAvailable[$key]);
+
+                $cont = 1;
+                $timeRemove = $hoursAvailable[$key + $cont];
+
+                while($timeRemove < $appointment->end_time) {
+                    unset($hoursAvailable[$key + $cont]);
+                    $cont++;
+                    $timeRemove = $hoursAvailable[$key + $cont];
+                }
+            }
+        }
+
+        return view('appointments.patients.setTime', compact('procedure', 'date', 'dentist', 'hoursAvailable'));
     }
 
-    public function setTime(Request $request) {
+    public function setTime(Request $request)
+    {
+
+        $procedure = $request->procedure;
+        $dentist = $request->dentist;
+        $date = $request->date;
+
+        $hoursAvailable = ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00"];
+
+        $appointmentsOnSelectedDay = DB::table('appointments')
+            ->join('dentists', 'dentists.id', 'appointments.id_dentist')
+            ->where('dentists.id', $dentist)
+            ->where('appointments.date', $date)
+            ->get();
+
+        foreach ($appointmentsOnSelectedDay as $appointment) {
+
+            if (($key = array_search($appointment->start_time, $hoursAvailable)) !== false) {
+                unset($hoursAvailable[$key]);
+
+                $cont = 1;
+                $timeRemove = $hoursAvailable[$key + $cont];
+
+                while($timeRemove < $appointment->end_time) {
+                    unset($hoursAvailable[$key + $cont]);
+                    $cont++;
+                    $timeRemove = $hoursAvailable[$key + $cont];
+                }
+            }
+        }
+
+        if($request->time === null) {
+            return view('appointments.patients.setTime', compact('procedure', 'dentist', 'date', 'hoursAvailable'))->with('errorTime', 'Selecione um horário');
+        }
 
         $horario = substr($request->time, 0, 2);
 
         if ($horario < 9 || $horario > 17) {
-            return view('appointments.setTime', compact('procedure', 'patient'))->with('errorTime', 'Selecione um horário entre 09 e 17');
+            return view('appointments.patients.setTime', compact('procedure', 'dentist', 'date', 'hoursAvailable'))->with('errorTime', 'Selecione um horário');
         }
 
         return $this->store($request);
@@ -93,6 +156,30 @@ class AppointmentsClientsController extends Controller
         $date = $request->date;
         $dentist = $request->dentist;
 
+        $hoursAvailable = ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00"];
+
+        $appointmentsOnSelectedDay = DB::table('appointments')
+            ->join('dentists', 'dentists.id', 'appointments.id_dentist')
+            ->where('dentists.id', $dentist)
+            ->where('appointments.date', $date)
+            ->get();
+
+        foreach ($appointmentsOnSelectedDay as $appointment) {
+
+            if (($key = array_search($appointment->start_time, $hoursAvailable)) !== false) {
+                unset($hoursAvailable[$key]);
+
+                $cont = 1;
+                $timeRemove = $hoursAvailable[$key + $cont];
+
+                while($timeRemove < $appointment->end_time) {
+                    unset($hoursAvailable[$key + $cont]);
+                    $cont++;
+                    $timeRemove = $hoursAvailable[$key + $cont];
+                }
+            }
+        }
+
         $appointmentOnRequestDay = DB::table('appointments')
             ->join('dentists', 'dentists.id', 'appointments.id_dentist')
             ->where('date', $request->date)
@@ -101,11 +188,11 @@ class AppointmentsClientsController extends Controller
 
         foreach ($appointmentOnRequestDay as $appointment) {
             if ($appointment->start_time === $request->time || $appointment->end_time === $request->time) {
-                return view('appointments.patients.setTime', compact('patient', 'procedure', 'date', 'dentist'))->with('errorTime', 'Já existe uma consulta para este horário. Tente novamente.');
+                return view('appointments.patients.setTime', compact('patient', 'procedure', 'date', 'dentist', 'hoursAvailable'))->with('errorTime', 'Horário Indisponível');
             }
 
             if ($request->time > $appointment->start_time && $request->time < $appointment->end_time) {
-                return view('appointments.patients.setTime', compact('patient', 'procedure', 'date', 'dentist'))->with('errorTime', 'Já existe uma consulta para este horário. Tente novamente.');
+                return view('appointments.patients.setTime', compact('patient', 'procedure', 'date', 'dentist', 'hoursAvailable'))->with('errorTime', 'Horário Indisponível');
             }
         }
 
@@ -115,7 +202,7 @@ class AppointmentsClientsController extends Controller
 
         foreach ($appointmentOnRequestDay as $appointment) {
             if ($endTime > $appointment->start_time && $endTime < $appointment->end_time) {
-                return view('appointments.patients.setTime', compact('patient', 'procedure', 'date'))->with('errorTime', 'Conflito de horários. Visite seus agendamentos para visualizar seus horários livres.');
+                return view('appointments.patients.setTime', compact('patient', 'procedure', 'date', 'dentist', 'hoursAvailable'))->with('errorTime', 'Horário Indisponível');
             }
         }
 
@@ -129,8 +216,8 @@ class AppointmentsClientsController extends Controller
         ]);
 
         $dentist = DB::table('dentists')
-                    ->join('pessoas', 'pessoas.id', 'dentists.id')
-                    ->first();
+            ->join('pessoas', 'pessoas.id', 'dentists.id')
+            ->first();
 
         $procedure = Procedures::where('id', $request->procedure)->first()->description;
 

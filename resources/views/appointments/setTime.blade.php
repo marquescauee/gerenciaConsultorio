@@ -12,30 +12,30 @@
     </style>
 
     <div class="container mt-5 divCentral">
+
+        @if (isset($errorTime))
+            <div class="alert alert-danger msgError">
+                {{ $errorTime }}
+            </div>
+        @endif
         <form action="{{ route('appointments.setTime') }}" class="w-50 my-0" style="margin-left: 20%" method="POST">
             @csrf
 
-            <input type="hidden" name="procedure" value="{{$procedure}}">
-            <input type="hidden" name="patient" value="{{$patient}}">
-            <input type="hidden" name="date" value="{{$date}}">
+            <input type="hidden" name="procedure" value="{{ $procedure }}">
+            <input type="hidden" name="patient" value="{{ $patient }}">
+            <input type="hidden" name="date" value="{{ $date }}">
 
             <div class="mb-3">
-                <label for="time" class="form-label">Horário (Entre 09:00 e 17:00):</label>
-                <input type="time" class="form-control @error('time') is-invalid @enderror" id="time"
-                    aria-describedby="time" required name="time" min="09:00" value="09:00" max="17:00"
-                    step="1800">
+                <label for="time" class="form-label labelConsulta d-block">Horário:</label>
 
-                @if (isset($errorTime))
-                    <div class="alert alert-danger mt-2">
-                        {{ $errorTime }}
+                @foreach ($hoursAvailable as $hour)
+                    <div class="form-check mx-3 my-5" style="display: inline-block">
+                        <input class="form-check-input" type="radio" name="time" value="{{ $hour }}">
+                        <label class="form-check-label text-dark" for="flexRadioDefault">
+                            {{ $hour }}
+                        </label>
                     </div>
-                @endif
-
-                @error('time')
-                    <span class="invalid-feedback align" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
+                @endforeach
             </div>
 
             <button type="submit" class="btn btn-primary w-100 mt-3">Continuar</button>
