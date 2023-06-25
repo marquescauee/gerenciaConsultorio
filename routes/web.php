@@ -86,9 +86,24 @@ Route::post('/appointments/setDate', [App\Http\Controllers\AppointmentsControlle
 Route::post('/appointments/add/setTime', [App\Http\Controllers\AppointmentsController::class, 'createSetTime'])->name('appointments.createSetTime');
 Route::post('/appointments/setTime', [App\Http\Controllers\AppointmentsController::class, 'setTime'])->name('appointments.setTime');
 
+//Appointments Patients
+Route::get('/appointments/patients', [App\Http\Controllers\AppointmentsClientsController::class, 'create'])->name('appointments.patients.create');
 
-Route::get('/appointments/clients', [App\Http\Controllers\AppointmentsClientsController::class, 'create'])->name('appointments.clients.create');
+Route::post('/appointments/patients/setDentist', [App\Http\Controllers\AppointmentsClientsController::class, 'createSetDentist'])->name('appointments.patients.createSetDentist');
 
+Route::post('/appointments/setDentist', [App\Http\Controllers\AppointmentsClientsController::class, 'setDentist'])->name('appointments.patients.setDentist');
+
+Route::post('/appointments/patients/setDate', [App\Http\Controllers\AppointmentsClientsController::class, 'createSetDate'])->name('appointments.patients.createSetDate');
+
+Route::post('/appointments/clients/setDate', [App\Http\Controllers\AppointmentsClientsController::class, 'setDate'])->name('appointments.patients.setDate');
+
+Route::post('/appointments/patients/setTime', [App\Http\Controllers\AppointmentsClientsController::class, 'createSetTime'])->name('appointments.patients.createSetTime');
+
+Route::post('/appointments/clients/setTime', [App\Http\Controllers\AppointmentsClientsController::class, 'setTime'])->name('appointments.patients.setTime');
+
+
+
+//Generate Start Data
 Route::get('/gerarDados', function () {
     if (DB::table('specialities')->count() == 0) {
         DB::table('specialities')->insert([

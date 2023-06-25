@@ -20,7 +20,8 @@
             /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         }
 
-        body, main {
+        body,
+        main {
             overflow: auto;
         }
 
@@ -44,23 +45,24 @@
         .labelConsulta {
             color: white
         }
-
     </style>
 
     <div class="container mt-5 divCentral">
-        <form action="{{ route('appointments.patients.createSetDentist') }}" class="w-50 my-0" style="margin-left: 20%" method="POST">
+        <form action="{{ route('appointments.patients.setDentist') }}" class="w-50 my-0" style="margin-left: 20%" method="POST">
             @csrf
 
-            <div class="mb-3">
-                <label for="procedure" class="form-label labelConsulta">Procedimento:</label>
+            <input type="hidden" name="procedure" value="{{ $procedure }}">
 
-                <select name="procedure" id="procedure" class="form-select @error('procedure') is-invalid @enderror">
-                    @foreach ($procedures as $procedure)
-                        <option value="{{ $procedure->id }}">{{ $procedure->description }}</option>
+            <div class="mb-3">
+                <label for="dentist" class="form-label labelConsulta">Dentista:</label>
+
+                <select name="dentist" id="dentist" class="form-select @error('dentist') is-invalid @enderror">
+                    @foreach ($dentists as $dentist)
+                        <option value="{{ $dentist->id }}">{{ $dentist->name }}</option>
                     @endforeach
                 </select>
 
-                @error('procedure')
+                @error('dentist')
                     <span class="invalid-feedback align" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

@@ -20,7 +20,8 @@
             /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         }
 
-        body, main {
+        body,
+        main {
             overflow: auto;
         }
 
@@ -44,23 +45,29 @@
         .labelConsulta {
             color: white
         }
-
     </style>
 
     <div class="container mt-5 divCentral">
-        <form action="{{ route('appointments.patients.createSetDentist') }}" class="w-50 my-0" style="margin-left: 20%" method="POST">
+        <form action="{{ route('appointments.patients.setTime') }}" class="w-50 my-0" style="margin-left: 20%" method="POST">
             @csrf
 
+            <input type="hidden" name="procedure" value="{{ $procedure }}">
+            <input type="hidden" name="date" value="{{ $date }}">
+            <input type="hidden" name="dentist" value="{{ $dentist }}">
+
             <div class="mb-3">
-                <label for="procedure" class="form-label labelConsulta">Procedimento:</label>
+                <label for="time" class="form-label labelConsulta">Horário (Entre 09:00 e 17:00):</label>
+                <input type="time" class="form-control @error('time') is-invalid @enderror" id="time"
+                    aria-describedby="time" required name="time" min="09:00" value="09:00" max="17:00"
+                    step="1800">
 
-                <select name="procedure" id="procedure" class="form-select @error('procedure') is-invalid @enderror">
-                    @foreach ($procedures as $procedure)
-                        <option value="{{ $procedure->id }}">{{ $procedure->description }}</option>
-                    @endforeach
-                </select>
+                @if (isset($errorTime))
+                    <div class="alert alert-danger mt-2">
+                        {{ $errorTime }}
+                    </div>
+                @endif
 
-                @error('procedure')
+                @error('time')
                     <span class="invalid-feedback align" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

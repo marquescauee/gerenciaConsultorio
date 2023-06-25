@@ -20,7 +20,8 @@
             /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         }
 
-        body, main {
+        body,
+        main {
             overflow: auto;
         }
 
@@ -44,23 +45,27 @@
         .labelConsulta {
             color: white
         }
-
     </style>
 
     <div class="container mt-5 divCentral">
-        <form action="{{ route('appointments.patients.createSetDentist') }}" class="w-50 my-0" style="margin-left: 20%" method="POST">
+        <form action="{{ route('appointments.patients.setDate') }}" class="w-50 my-0" style="margin-left: 20%" method="POST">
             @csrf
 
+            <input type="hidden" name="procedure" value="{{ $procedure }}">
+            <input type="hidden" name="dentist" value="{{ $dentist }}">
+
             <div class="mb-3">
-                <label for="procedure" class="form-label labelConsulta">Procedimento:</label>
+                <label for="date" class="form-label labelConsulta">Data de realização:</label>
+                <input type="date" class="form-control @error('date') is-invalid @enderror" id="date"
+                    aria-describedby="date" required name="date">
 
-                <select name="procedure" id="procedure" class="form-select @error('procedure') is-invalid @enderror">
-                    @foreach ($procedures as $procedure)
-                        <option value="{{ $procedure->id }}">{{ $procedure->description }}</option>
-                    @endforeach
-                </select>
+                @if (isset($errorDay))
+                    <div class="alert alert-danger mt-2">
+                        {{ $errorDay }}
+                    </div>
+                @endif
 
-                @error('procedure')
+                @error('date')
                     <span class="invalid-feedback align" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

@@ -69,7 +69,7 @@
         </div>
 
         <div>
-            <a class="botaoConsulta" href="{{route('appointments.clients.create')}}">
+            <a class="botaoConsulta" href="{{route('appointments.patients.create')}}">
                 Marque Sua Consulta!
             </a>
         </div>
