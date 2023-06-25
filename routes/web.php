@@ -81,6 +81,11 @@ Route::get('/appointments', [\App\Http\Controllers\AppointmentsController::class
 Route::get('/appointments/add', [App\Http\Controllers\AppointmentsController::class, 'create'])->name('appointments.create');
 Route::post('/appointments', [\App\Http\Controllers\AppointmentsController::class, 'store'])->name('appointments.store');
 Route::delete('/appointments/delete/{id}', [App\Http\Controllers\AppointmentsController::class, 'destroy'])->name('appointments.delete');
+Route::post('/appointments/add/setDate', [App\Http\Controllers\AppointmentsController::class, 'createSetDate'])->name('appointments.createSetDate');
+Route::post('/appointments/setDate', [App\Http\Controllers\AppointmentsController::class, 'setDate'])->name('appointments.setDate');
+Route::post('/appointments/add/setTime', [App\Http\Controllers\AppointmentsController::class, 'createSetTime'])->name('appointments.createSetTime');
+Route::post('/appointments/setTime', [App\Http\Controllers\AppointmentsController::class, 'setTime'])->name('appointments.setTime');
+
 
 Route::get('/appointments/clients', [App\Http\Controllers\AppointmentsClientsController::class, 'create'])->name('appointments.clients.create');
 

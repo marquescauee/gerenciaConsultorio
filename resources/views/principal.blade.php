@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.home')
 
 @section('content')
     <style>
@@ -16,7 +16,7 @@
         body, main {
             overflow: auto;
         }
-        
+
 
         .botaoConsulta {
             display: flex;

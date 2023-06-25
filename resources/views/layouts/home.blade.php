@@ -38,7 +38,7 @@
         }
 
         .linkNav {
-            color: black;
+            color: white;
             text-decoration: none;
         }
     </style>
