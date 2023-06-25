@@ -188,86 +188,15 @@ Route::get('/gerarDados', function () {
             'day' => 'Monday'
         ]);
 
-        // Agenda::create([
-        //     'id_dentist' => $user->id,
-        //     'day' => 'Monday',
-        //     'time' => '09:30'
-        // ]);
-        // Agenda::create([
-        //     'id_dentist' => $user->id,
-        //     'day' => 'Monday',
-        //     'time' => '10:00'
-        // ]);
-        // Agenda::create([
-        //     'id_dentist' => $user->id,
-        //     'day' => 'Monday',
-        //     'time' => '10:30'
-        // ]);
-        // Agenda::create([
-        //     'id_dentist' => $user->id,
-        //     'day' => 'Monday',
-        //     'time' => '11:00'
-        // ]);
-        // Agenda::create([
-        //     'id_dentist' => $user->id,
-        //     'day' => 'Monday',
-        //     'time' => '11:30'
-        // ]);
-        // Agenda::create([
-        //     'id_dentist' => $user->id,
-        //     'day' => 'Monday',
-        //     'time' => '12:00'
-        // ]);
-        // Agenda::create([
-        //     'id_dentist' => $user->id,
-        //     'day' => 'Monday',
-        //     'time' => '12:30'
-        // ]);
-        // Agenda::create([
-        //     'id_dentist' => $user->id,
-        //     'day' => 'Monday',
-        //     'time' => '13:00'
-        // ]);
-        // Agenda::create([
-        //     'id_dentist' => $user->id,
-        //     'day' => 'Monday',
-        //     'time' => '13:30'
-        // ]);
-        // Agenda::create([
-        //     'id_dentist' => $user->id,
-        //     'day' => 'Monday',
-        //     'time' => '14:00'
-        // ]);
-        // Agenda::create([
-        //     'id_dentist' => $user->id,
-        //     'day' => 'Monday',
-        //     'time' => '14:30'
-        // ]);
-        // Agenda::create([
-        //     'id_dentist' => $user->id,
-        //     'day' => 'Monday',
-        //     'time' => '15:00'
-        // ]);
-        // Agenda::create([
-        //     'id_dentist' => $user->id,
-        //     'day' => 'Monday',
-        //     'time' => '15:30'
-        // ]);
-        // Agenda::create([
-        //     'id_dentist' => $user->id,
-        //     'day' => 'Monday',
-        //     'time' => '16:00'
-        // ]);
-        // Agenda::create([
-        //     'id_dentist' => $user->id,
-        //     'day' => 'Monday',
-        //     'time' => '16:30'
-        // ]);
-        // Agenda::create([
-        //     'id_dentist' => $user->id,
-        //     'day' => 'Monday',
-        //     'time' => '17:00'
-        // ]);
+        Agenda::create([
+            'id_dentist' => $user->id,
+            'day' => 'Wednesday'
+        ]);
+
+        Agenda::create([
+            'id_dentist' => $user->id,
+            'day' => 'Thursday'
+        ]);
 
         //create appointment
         DB::table('appointments')->insert([
