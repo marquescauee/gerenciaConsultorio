@@ -30,6 +30,22 @@
                 @enderror
             </div>
 
+            <div class="mb-3">
+                <label for="speciality" class="form-label ">Especialidade:</label>
+
+                <select name="speciality" id="speciality" class="form-select @error('speciality') is-invalid @enderror">
+                    @foreach ($specialities as $speciality)
+                        <option value="{{$speciality->id}}">{{$speciality->name}}</option>
+                    @endforeach
+                </select>
+
+                @error('speciality')
+                    <span class="invalid-feedback align" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+
             <button type="submit" class="btn btn-primary w-100 mt-3">Salvar</button>
         </form>
     </div>

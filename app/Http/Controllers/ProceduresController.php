@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Procedures;
+use App\Models\Speciality;
 use Illuminate\Http\Request;
 
 class ProceduresController extends Controller
@@ -32,7 +33,9 @@ class ProceduresController extends Controller
      */
     public function create()
     {
-        return view('procedures.create');
+        $specialities = Speciality::all();
+
+        return view('procedures.create', compact('specialities'));
     }
 
     /**
@@ -57,7 +60,8 @@ class ProceduresController extends Controller
         $request->validate($rules, $feedback);
 
         Procedures::create([
-            'description' => $request->get('description')
+            'description' => $request->get('description'),
+            'id_speciality' => $request->speciality
         ]);
 
         return redirect('/procedures');
@@ -83,8 +87,9 @@ class ProceduresController extends Controller
     public function edit($id)
     {
         $procedure = Procedures::find($id);
+        $specialities = Speciality::all();
 
-        return view('procedures.edit', compact('procedure'));
+        return view('procedures.edit', compact('procedure', 'specialities'));
     }
 
     /**
@@ -111,7 +116,10 @@ class ProceduresController extends Controller
 
         $procedure = Procedures::find($request->get('id'));
 
-        $procedure->update(['description' => $request->get('description')]);
+        $procedure->update([
+            'description' => $request->get('description'),
+            'id_speciality' => $request->speciality
+        ]);
 
         return redirect('/procedures');
     }

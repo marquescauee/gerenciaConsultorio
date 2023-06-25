@@ -16,7 +16,10 @@ class CreateProceduresTable extends Migration
         Schema::create('procedures', function (Blueprint $table) {
             $table->id();
             $table->string("description");
+            $table->unsignedBigInteger('id_speciality');
             $table->timestamps();
+
+            $table->foreign('id_speciality')->references('id')->on('specialities');
         });
     }
 

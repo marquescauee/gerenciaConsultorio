@@ -152,7 +152,8 @@ Route::get('/gerarDados', function () {
 
         //create procedure
         $procedure = Procedures::create([
-            'description' => 'Extração de Dente Siso'
+            'description' => 'Extração de Dente Siso',
+            'id_speciality' => $speciality->id
         ]);
 
         //create appointment

@@ -15,6 +15,12 @@ use Spatie\GoogleCalendar\Event as GoogleCalendarEvent;
 class AppointmentsController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('funcionarioMiddleware');
+    }
+
     public function index()
     {
         $appointments = DB::table('appointments')
