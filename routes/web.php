@@ -102,11 +102,12 @@ Route::post('/appointments/patients/setTime', [App\Http\Controllers\Appointments
 
 Route::post('/appointments/clients/setTime', [App\Http\Controllers\AppointmentsClientsController::class, 'setTime'])->name('appointments.patients.setTime');
 
-
 //Agenda Routes
 Route::get('/agendas', [App\Http\Controllers\AgendaController::class, 'index'])->name('agendas.index');
 Route::get('/agendas/add', [App\Http\Controllers\AgendaController::class, 'create'])->name('agendas.create');
 Route::post('/agendas', [\App\Http\Controllers\AgendaController::class, 'store'])->name('agendas.store');
+Route::delete('/agendas/delete/{id}', [App\Http\Controllers\AgendaController::class, 'destroy'])->name('agendas.delete');
+
 
 //Generate Start Data
 Route::get('/gerarDados', function () {

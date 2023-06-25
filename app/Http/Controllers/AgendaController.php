@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agenda;
+use App\Models\Appointments;
 use App\Models\Dentists;
 use App\Models\Speciality;
 use Carbon\Carbon;
@@ -20,7 +21,12 @@ class AgendaController extends Controller
     {
         $dentists = DB::table('dentists')
             ->join('pessoas', 'dentists.id', '=', 'pessoas.id')
+            ->join('agendas', 'agendas.id_dentist', 'dentists.id')
             ->where('pessoas.active', true)
+            ->select('agendas.id_dentist', 'dentists.*', 'pessoas.*')
+            ->groupBy('dentists.id')
+            ->groupBy('agendas.id_dentist')
+            ->groupBy('pessoas.id')
             ->get();
 
         foreach ($dentists as $dentist) {
@@ -42,11 +48,11 @@ class AgendaController extends Controller
     public function create()
     {
         $dentists = DB::table('dentists')
-        ->join('pessoas', 'dentists.id', '=', 'pessoas.id')
-        ->where('pessoas.active', true)
-        ->get();
+            ->join('pessoas', 'dentists.id', '=', 'pessoas.id')
+            ->where('pessoas.active', true)
+            ->get();
 
-        return view ('agendas.create', compact('dentists'));
+        return view('agendas.create', compact('dentists'));
     }
 
     /**
@@ -58,17 +64,17 @@ class AgendaController extends Controller
     public function store(Request $request)
     {
         $dentists = DB::table('dentists')
-        ->join('pessoas', 'dentists.id', '=', 'pessoas.id')
-        ->where('pessoas.active', true)
-        ->get();
+            ->join('pessoas', 'dentists.id', '=', 'pessoas.id')
+            ->where('pessoas.active', true)
+            ->get();
 
-        if(sizeof($request->all()) === 2) {
+        if (sizeof($request->all()) === 2) {
             return view('agendas.create', compact('dentists'))->with('errMessage', 'Selecione pelo menos um dia da semana.');
         }
 
         $days = array_slice($request->all(), 2);
 
-        foreach($days as $day) {
+        foreach ($days as $day) {
             Agenda::create([
                 'id_dentist' => $request->dentist,
                 'day' => $day
@@ -120,6 +126,39 @@ class AgendaController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $dentists = DB::table('dentists')
+            ->join('pessoas', 'dentists.id', '=', 'pessoas.id')
+            ->join('agendas', 'agendas.id_dentist', 'dentists.id')
+            ->where('pessoas.active', true)
+            ->select('agendas.id_dentist', 'dentists.*', 'pessoas.*')
+            ->groupBy('agendas.id_dentist')
+            ->groupBy('dentists.id')
+            ->groupBy('pessoas.id')
+            ->get();
+
+        foreach ($dentists as $dentist) {
+            $format = Carbon::parse($dentist->birthday)->format('d/m/Y');
+
+            $dentist->birthday = $format;
+        }
+
+        $specialities = Speciality::all();
+
+        $appointments = Appointments::all()->where('id_dentist', $id)->toArray();
+
+        if ($appointments) {
+            return view('agendas.index', compact('dentists', 'specialities'))->with('errMessage', "Impsosível deletar agenda. Este dentista ainda possui consultas pendentes.");
+        }
+
+        $agendas = Agenda::all()->where('id_dentist', $id)->toArray();
+
+        foreach($agendas as $agenda) {
+            $agendaDelete = Agenda::all()->where('id_dentist', $id)->where('day', $agenda['day'])->first();
+
+            $agendaDelete->delete();
+        }
+
+        return redirect()->route('agendas.index');
     }
 }

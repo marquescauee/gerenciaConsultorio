@@ -21,7 +21,9 @@
             width: 35px;
         }
 
-
+        .margem {
+            margin-left: 15rem;
+        }
     </style>
 
     <div class="container">
@@ -30,6 +32,12 @@
                 <img width="25" src="{{ asset('/img/icon/add.png') }}" alt="">
             </a>
         </div>
+
+        @if (isset($errMessage))
+            <div class="alert alert-danger mt-2 margem">
+                {{ $errMessage }}
+            </div>
+        @endif
 
         <table className="table">
             <thead>
@@ -57,43 +65,38 @@
                                 <td>
                                     {{ $speciality->name }}
                                 </td>
-                            @endif
-                       @endforeach
-                        <td>
-                            {{ $dentist->email }}
-                        </td>
+                            @endif @endforeach
+                <td>
+                {{ $dentist->email }}
+                </td>
 
-                        <td>
-                            {{ $dentist->birthday }}
-                        </td>
-                        <td>
-                            {{ $dentist->cellphone }}
-                        </td>
-                        <td class="d-flex justify-content-center align-items-center gap-2">
-                            <div class="subIcons">
-                                <a href="">
-                                    <img width="25" src="{{ asset('/img/icon/search.png') }}" alt="">
-                                </a>
+                <td>
+                    {{ $dentist->birthday }}
+                </td>
+                <td>
+                    {{ $dentist->cellphone }}
+                </td>
+                <td class="d-flex justify-content-center align-items-center gap-2">
+                    <div class="subIcons">
+                        <a href="">
+                            <img width="25" src="{{ asset('/img/icon/search.png') }}" alt="">
+                        </a>
+                    </div>
+                    <div class="subIcons">
+                        <form action="{{ url('agendas/delete/' . $dentist->id) }}" method="POST" class="my-0">
+                            @method('DELETE')
+                            @csrf
+                            <div class="my-0">
+                                <button class="border-0 bg-transparent">
+                                    <img width="25" src="{{ asset('/img/icon/trash.png') }}" alt="">
+                                </button>
                             </div>
-                            <div class="subIcons">
-                                <a href="{{url("dentists/edit/".$dentist->id)}}">
-                                    <img width="25" src="{{ asset('/img/icon/pencil.png') }}" alt="">
-                                </a>
-                            </div>
-                            <div class="subIcons">
-                                <form action="{{ url('dentists/delete/'.$dentist->id) }}" method="POST" class="my-0">
-                                    @method('DELETE')
-                                    @csrf
-                                    <div class="my-0">
-                                        <button class="border-0 bg-transparent">
-                                            <img width="25" src="{{ asset('/img/icon/trash.png') }}" alt="">
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </td>
-                    </tr> @endforeach
-                </tbody>
+                        </form>
+                    </div>
+                </td>
+                </tr>
+                @endforeach
+            </tbody>
         </table>
     </div>
 @endsection
