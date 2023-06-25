@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\MailNotify;
 use App\Models\Agenda;
 use App\Models\Appointments;
 use App\Models\Patient;
@@ -11,6 +12,7 @@ use Google\Service\Calendar\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Spatie\GoogleCalendar\Event as GoogleCalendarEvent;
 
 class AppointmentsController extends Controller
@@ -58,6 +60,12 @@ class AppointmentsController extends Controller
         $patient = $request->patient;
         $procedure = $request->procedure;
         $date = $request->date;
+
+        $patientEmail = DB::table('patients')
+                            ->join('pessoas', 'pessoas.id', 'patients.id')
+                            ->where('patients.id', $patient)
+                            ->first()
+                            ->email;
 
         $hoursAvailable = ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00"];
 
@@ -118,6 +126,10 @@ class AppointmentsController extends Controller
             'end_time' => $this->tabelaHorarios($procedimento, $request->time)
         ]);
 
+
+
+        Mail::to($patientEmail)->send(new MailNotify(Auth::user(), $date, $request->time, $procedure));
+
         return redirect()->route('appointments.index');
     }
 
@@ -140,7 +152,7 @@ class AppointmentsController extends Controller
             }
         }
 
-        if ($procedimento === 'Avaliação') {
+        if ($procedimento === 'Avaliação de Sisos') {
             if ($startTime === '09:30') {
                 return '10:00';
             } else {

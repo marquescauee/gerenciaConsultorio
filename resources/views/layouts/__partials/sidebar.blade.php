@@ -78,14 +78,14 @@
 
                 <div class="d-flex align-items-center divSubItems">
                     <div class="row d-flex subIconsSize">
-                        <img src="{{ asset('/img/icon/calendario.png') }}" alt="">
+                        <img src="{{ asset('/img/icon/multiUser.png') }}" alt="">
                     </div>
                     <a class="d-flex text-decoration-none text-light" href="{{ route('home') }}">Pacientes</a>
                 </div>
 
                 <div class="d-flex align-items-center divSubItems">
                     <div class="row d-flex subIconsSize">
-                        <img src="{{ asset('/img/icon/multiUser.png') }}" alt="">
+                        <img src="{{ asset('/img/icon/calendario.png') }}" alt="">
                     </div>
                     <a class="d-flex text-decoration-none text-light" href="{{ route('agendas.index') }}">Agendas</a>
                 </div>

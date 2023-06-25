@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\MailNotify;
 use App\Models\Agenda;
 use App\Models\Appointments;
 use App\Models\Dentists;
@@ -10,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class AppointmentsClientsController extends Controller
 {
@@ -20,7 +22,6 @@ class AppointmentsClientsController extends Controller
 
     public function create()
     {
-
         $procedures = Procedures::all();
 
         return view('appointments.patients.create', compact('procedures'));
@@ -273,6 +274,8 @@ class AppointmentsClientsController extends Controller
 
         $time = $request->time;
 
+        Mail::to(Auth::user()->email)->send(new MailNotify($dentist, $date, $time, $procedure));
+
         return view('appointments.patients.success', compact('dentist', 'procedure', 'date', 'time'));
     }
 
@@ -295,7 +298,7 @@ class AppointmentsClientsController extends Controller
             }
         }
 
-        if ($procedimento === 'Avaliação') {
+        if ($procedimento === 'Avaliação de Sisos') {
             if ($startTime === '09:30') {
                 return '10:00';
             } else {
