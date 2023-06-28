@@ -108,6 +108,11 @@ Route::get('/agendas/add', [App\Http\Controllers\AgendaController::class, 'creat
 Route::post('/agendas', [\App\Http\Controllers\AgendaController::class, 'store'])->name('agendas.store');
 Route::delete('/agendas/delete/{id}', [App\Http\Controllers\AgendaController::class, 'destroy'])->name('agendas.delete');
 
+// Receita
+Route::get('/recipes', [App\Http\Controllers\RecipeController::class, 'index'])->name('recipes.index');
+Route::get('/recipes/add', [App\Http\Controllers\RecipeController::class, 'create'])->name('recipes.create');
+Route::post('/recipes', [\App\Http\Controllers\RecipeController::class, 'store'])->name('recipes.store');
+Route::delete('/recipes/delete/{id}', [App\Http\Controllers\RecipeController::class, 'destroy'])->name('recipes.delete');
 
 //Generate Start Data
 Route::get('/gerarDados', function () {

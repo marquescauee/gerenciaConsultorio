@@ -108,6 +108,14 @@
 
                 <div class="d-flex align-items-center divSubItems">
                     <div class="row d-flex subIconsSize">
+                        <img src="{{ asset('/img/icon/atestado.png') }}" alt="">
+                    </div>
+                    <a class="d-flex text-decoration-none text-light"
+                        href="{{ route('recipes.index') }}">Receitas</a>
+                </div>
+
+                <div class="d-flex align-items-center divSubItems">
+                    <div class="row d-flex subIconsSize">
                         <img src="{{ asset('/img/icon/medicines.png') }}" alt="">
                     </div>
                     <a class="d-flex text-decoration-none text-light" href="#">Medicamentos</a>
