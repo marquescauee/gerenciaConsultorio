@@ -11,6 +11,7 @@ class ProceduresController extends Controller
 
     public function __construct() {
         $this->middleware('auth');
+        $this->middleware('adminMiddleware');
         $this->middleware('funcionarioMiddleware');
     }
 

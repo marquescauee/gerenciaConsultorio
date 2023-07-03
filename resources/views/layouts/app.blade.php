@@ -89,7 +89,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     @if (Auth::user()->funcionario)
-                                        <a class="dropdown-item linkNav" href="{{ route('home') }}">
+                                        <a class="dropdown-item linkNav" href="{{ route('appointments.index') }}">
                                             {{ __('Painel de Gerenciamento') }}
                                         </a>
                                     @endif

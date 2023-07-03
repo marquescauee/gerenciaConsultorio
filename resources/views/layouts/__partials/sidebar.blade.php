@@ -146,7 +146,7 @@
                     <div class="row d-flex subIconsSize">
                         <img src="{{ asset('/img/icon/trend.png') }}" alt="">
                     </div>
-                    <a class="d-flex text-decoration-none text-light" href="#">Relatórios</a>
+                    <a class="d-flex text-decoration-none text-light" href="{{route('suppliers.index')}}">Fornecedores</a>
                 </div>
 
 

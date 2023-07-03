@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class SpecialityController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+        $this->middleware('adminMiddleware');
+        $this->middleware('funcionarioMiddleware');
+    }
+
     /**
      * Display a listing of the resource.
      *
