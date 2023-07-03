@@ -108,7 +108,7 @@
 
                 <div class="d-flex align-items-center divSubItems">
                     <div class="row d-flex subIconsSize">
-                        <img src="{{ asset('/img/icon/atestado.png') }}" alt="">
+                        <img src="{{ asset('/img/icon/receita.png') }}" alt="">
                     </div>
                     <a class="d-flex text-decoration-none text-light"
                         href="{{ route('recipes.index') }}">Receitas</a>
@@ -142,14 +142,6 @@
                     </div>
                     <a class="d-flex text-decoration-none text-light" href="#">Atestados</a>
                 </div>
-
-                <div class="d-flex align-items-center divSubItems">
-                    <div class="row d-flex subIconsSize">
-                        <img src="{{ asset('/img/icon/receita.png') }}" alt="">
-                    </div>
-                    <a class="d-flex text-decoration-none text-light" href="#">Receitas</a>
-                </div>
-
                 <div class="d-flex align-items-center divSubItems">
                     <div class="row d-flex subIconsSize">
                         <img src="{{ asset('/img/icon/trend.png') }}" alt="">
@@ -180,13 +172,6 @@
             @else
                 <div class="d-flex align-items-center divSubItems mt-5">
                     <div class="row d-flex subIconsSize">
-                        <img src="{{ asset('/img/icon/multiUser.png') }}" alt="">
-                    </div>
-                    <a class="d-flex text-decoration-none text-light" href="{{ route('home') }}">Pacientes</a>
-                </div>
-
-                <div class="d-flex align-items-center divSubItems">
-                    <div class="row d-flex subIconsSize">
                         <img src="{{ asset('/img/icon/search.png') }}" alt="">
                     </div>
                     <a class="d-flex text-decoration-none text-light"
@@ -204,7 +189,7 @@
                     <div class="row d-flex subIconsSize">
                         <img src="{{ asset('/img/icon/receita.png') }}" alt="">
                     </div>
-                    <a class="d-flex text-decoration-none text-light" href="#">Receitas</a>
+                    <a class="d-flex text-decoration-none text-light" href="{{ route('recipes.index') }}">Receitas</a>
                 </div>
 
                 <div class="d-flex" style="margin-top: 450px">

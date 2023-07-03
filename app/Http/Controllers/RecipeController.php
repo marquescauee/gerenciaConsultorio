@@ -26,9 +26,9 @@ class RecipeController extends Controller
             ->join('patients', 'recipes.id_patient', 'patients.id')
             ->join('pessoas as patients_people', 'patients.id', '=', 'patients_people.id')
             ->where('dentists_people.active', true)
-            ->select('recipes.prescription', 'dentists.cro', 'dentists_people.*',
+            ->select('recipes.prescription', 'dentists.CRO', 'dentists_people.*',
             'patients_people.name as patient_name')
-            ->groupBy('dentists.id', 'patients.id', 'recipes.id')
+            ->groupBy('dentists.id', 'patients.id', 'recipes.id', 'dentists_people.id', 'patients_people.name')
             ->get();
 
         return view('recipes.index', compact('recipes'));

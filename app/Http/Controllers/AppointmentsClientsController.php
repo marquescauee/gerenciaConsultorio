@@ -265,8 +265,9 @@ class AppointmentsClientsController extends Controller
         ]);
 
         $dentist = DB::table('dentists')
-            ->join('pessoas', 'pessoas.id', 'dentists.id')
-            ->first();
+        ->join('pessoas', 'pessoas.id', 'dentists.id')
+        ->where('dentists.id', $request->dentist)
+        ->first();
 
         $procedure = Procedures::where('id', $request->procedure)->first()->description;
 
