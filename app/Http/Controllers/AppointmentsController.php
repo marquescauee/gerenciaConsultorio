@@ -32,6 +32,7 @@ class AppointmentsController extends Controller
             ->join('pessoas', 'pessoas.id', 'patients.id')
             ->join('procedures', 'procedures.id', 'appointments.id_procedure')
             ->where('appointments.id_dentist', Auth::user()->id)
+            ->where('appointments.date', '>', Carbon::now())
             ->orderBy('appointments.date')
             ->select(['appointments.id', 'procedures.description', 'appointments.date', 'pessoas.name'])
             ->get();
